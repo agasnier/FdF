@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/11/27 16:11:47 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/11/28 15:09:25 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_mlx
 	char	*windows_title;
 	int		windows_size_x;
 	int		windows_size_y;
+	int		map_size_x;
+	int		map_size_y;
 } t_mlx;
 
 typedef struct s_point
@@ -47,5 +49,32 @@ typedef struct s_point
 	int	z;
 	int	color;
 } t_point;
+
+
+//ft_initialization.c
+void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line);
+int		ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv);
+t_point	**ft_create_tab(t_mlx mlx_data);
+
+//ft_helper.c
+int	ft_size_map(t_mlx *mlx_data, char *argv);
+int	ft_atoi(char *line, int *j);
+
+
+// ft_control.c
+int	ft_input(int keycode, t_mlx *mlx);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #endif
