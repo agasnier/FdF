@@ -6,98 +6,112 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/11/28 16:37:38 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:46:44 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// void	ft_line_put(t_point *start, t_point *end, t_mlx *mlx)
-// {
-	
-// }
+void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point point)
+{
+	void	*pixel;
 
+	if (point.x < 0 || point.x > mlx_data.windows_size_x || point.y < 0 || point.y > mlx_data.windows_size_x) //// a changer par map size
+		return ;
+
+
+
+	pixel = img.img_data + (point.y * img.size_line) + (point.x * (img.bpp /8));
+
+	point.color = 0xFF0000; /////////////////////////////
+	
+	*(unsigned int*)pixel = point.color;
+}
+
+void	ft_put_line(t_mlx mlx_data, t_img img, t_point point_a, t_point point_b)
+{
+	float	y;
+	float	slope;
+	
+	if (point_a.x > point_b.x)
+		ft_put_line(mlx_data, img, point_b, point_a);
+
+	else
+	{
+		slope = ((float)point_b.y - (float)point_a.y)/((float)point_b.x - (float)point_a.x);
+
+		if (point_a.x == point_b.x)
+			while (point_a.y != point_b.y)
+			{
+				ft_put_pixel(mlx_data, img, point_a);
+				point_a.y++;
+			}
+		else
+		{
+			while (point_a.x != point_b.x)
+			{
+				ft_put_pixel(mlx_data, img, point_a);
+				y += slope;
+				if (y >= 1)
+				{
+					point_a.y++;
+					y = 0;
+				}
+				else if (y <= -1)
+				{
+					point_a.y--;
+					y = 0;
+				}
+				point_a.x++;
+
+			}
+		}
+	}
+}
 
 void	ft_render(t_mlx mlx_data, t_point **tab_point)
 {
 
-	void	*img_ptr;
-	void	*img_data;
+	t_img	img;
 
-	int		bpp;
-	int		size_line;
-	int		endian;
-	
-	img_ptr = mlx_new_image(mlx_data.addr_init, mlx_data.map_size_x, mlx_data.map_size_y);
-	img_data = mlx_get_data_addr(img_ptr, &bpp, &size_line, &endian);
+
+
+	////////setting view
+	ft_set_view(&mlx_data, 10, 0, 0, 30);
 
 	
+	///creation de l'img
+	img.img_ptr = mlx_new_image(mlx_data.addr_init, mlx_data.windows_size_x, mlx_data.windows_size_y);
+	img.img_data = mlx_get_data_addr(img.img_ptr, &img.bpp, &img.size_line, &img.endian);
 
 
+	///projection of points
+	// t_point	**tab_copy;
 
-
-
-
-
-
-
+	// tab_copy = ft_point_projection(tab_point, mlx_data);
 	
-	// t_point	**tab;
+	t_point test;
+	t_point test2;
 
-	// tab = tab_point;
+	test.x = 100;
+	test.y = 0;
+
+	test2.x = 100;
+	test2.y = 100;
+
+	tab_point = NULL;
 	
-	// int	center;
-	// center = 100;
+	ft_put_line(mlx_data, img, test, test2);
 
-	// int i = 0;
-	// int j;
-	// while (i < mlx_data.map_size_y)
-	// {
-	// 	j = 0;
-	// 	while (j < mlx_data.map_size_x)
-	// 	{
-	// 		tab[i][j].x += zoom;
-	// 		tab[i][j].y += zoom;
-	// 		tab[i][j].z += zoom;
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
+	// application de limage
+	mlx_put_image_to_window(mlx_data.addr_init, mlx_data.addr_windows, img.img_ptr, 0, 0);
+
+
+	///boucle event
+	mlx_hook(mlx_data.addr_windows, KEY_PRESS, KEY_PRESS_MASK, &ft_input, &mlx_data);
 	
+	mlx_loop(mlx_data.addr_init);
 
-
-	
-	// //double	angle;
-	// //angle = 30;
-
-	// i = 0;
-	
-	// //x' = (x - y) * cos(angle);
-	// //y' = (x + y) * sin(angle) - z;
-
-
-
-
-	
-	// while (i < mlx_data.map_size_y)
-	// {
-	// 	j = 0;
-	// 	while (j < mlx_data.map_size_x)
-	// 	{
-	// 		printf("%d\n", tab[i][j].z);
-	// 		mlx_pixel_put(mlx_data.addr_init, mlx_data.addr_windows, tab[i][j].x, tab[i][j].y, 0xF00000);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
-
-
-	// mlx_hook(mlx_data.addr_windows, KEY_PRESS, KEY_PRESS_MASK, &ft_input, &mlx_data);
-	
-	// mlx_loop(mlx_data.addr_init);
-
-
-	
 }
 
 
@@ -121,6 +135,7 @@ int	main(int argc, char **argv)
 	if (tab_point == NULL)
 		return (1);
 	ft_init_tab(tab_point, mlx_data, argv[1]);
+
 
 
 
@@ -158,7 +173,7 @@ int	main(int argc, char **argv)
 	}
 
 	mlx_data.windows_title = "fdf";
-	mlx_data.windows_size_x = 500;
+	mlx_data.windows_size_x = 1000;
 	mlx_data.windows_size_y = mlx_data.windows_size_x;
 	
 
@@ -168,7 +183,12 @@ int	main(int argc, char **argv)
 		return (1); //////error
 	}
 
+
+	////////////////////////////debut de rendu
+
+	//fait une copie de la map et modifie les valeurs / boucle pour chaque touches ?
 	ft_render(mlx_data, tab_point);
+
 
 	return (0);
 }

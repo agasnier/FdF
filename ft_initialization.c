@@ -6,11 +6,23 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/11/28 15:11:43 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:41:56 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y, int angle)
+{
+	t_view view;
+
+	view.zoom = zoom;
+	view.offset_x = offset_x;
+	view.offset_y = offset_y;
+	view.angle = angle;
+
+	mlx_data->view = view;	
+}
 
 void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 {
