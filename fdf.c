@@ -6,66 +6,41 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/02 11:46:44 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:35:12 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point point)
+void ft_apply_proj(t_point **tab_point, t_mlx mlx_data)
 {
-	void	*pixel;
-
-	if (point.x < 0 || point.x > mlx_data.windows_size_x || point.y < 0 || point.y > mlx_data.windows_size_x) //// a changer par map size
-		return ;
-
-
-
-	pixel = img.img_data + (point.y * img.size_line) + (point.x * (img.bpp /8));
-
-	point.color = 0xFF0000; /////////////////////////////
+	int	y;
+	int	x;
+	double rad;
+	double cos_val;
+	double sin_val;
+	double proj_x;
+	double proj_y;
+		
+	rad = mlx_data.view.angle * 3.14159265358979323846 / 180;
+	cos_val = cos(rad);
+	sin_val = sin(rad);
 	
-	*(unsigned int*)pixel = point.color;
-}
-
-void	ft_put_line(t_mlx mlx_data, t_img img, t_point point_a, t_point point_b)
-{
-	float	y;
-	float	slope;
-	
-	if (point_a.x > point_b.x)
-		ft_put_line(mlx_data, img, point_b, point_a);
-
-	else
+	y = 0;
+	while (y < mlx_data.map_size_y)
 	{
-		slope = ((float)point_b.y - (float)point_a.y)/((float)point_b.x - (float)point_a.x);
-
-		if (point_a.x == point_b.x)
-			while (point_a.y != point_b.y)
-			{
-				ft_put_pixel(mlx_data, img, point_a);
-				point_a.y++;
-			}
-		else
+		x = 0;
+		while (x < mlx_data.map_size_x)
 		{
-			while (point_a.x != point_b.x)
-			{
-				ft_put_pixel(mlx_data, img, point_a);
-				y += slope;
-				if (y >= 1)
-				{
-					point_a.y++;
-					y = 0;
-				}
-				else if (y <= -1)
-				{
-					point_a.y--;
-					y = 0;
-				}
-				point_a.x++;
-
-			}
+			proj_x = ((double)tab_point[y][x].x - (double)tab_point[y][x].y) * cos_val * (double)mlx_data.view.zoom;
+			proj_y = ((double)tab_point[y][x].x + (double)tab_point[y][x].y) * sin_val * (double)mlx_data.view.zoom - (double)tab_point[y][x].z * (double)mlx_data.view.zoom;
+			proj_x += mlx_data.view.offset_x;
+			proj_y += mlx_data.view.offset_y;
+			tab_point[y][x].proj.x = (int)proj_x;
+			tab_point[y][x].proj.y = (int)proj_y;
+			x++;
 		}
+		y++;
 	}
 }
 
@@ -74,42 +49,41 @@ void	ft_render(t_mlx mlx_data, t_point **tab_point)
 
 	t_img	img;
 
+	////////setting view && apply
+	ft_set_view(&mlx_data, 20, mlx_data.windows_size_x/2, mlx_data.windows_size_y/2, 30);
 
+	ft_apply_proj(tab_point, mlx_data);
 
-	////////setting view
-	ft_set_view(&mlx_data, 10, 0, 0, 30);
-
-	
 	///creation de l'img
 	img.img_ptr = mlx_new_image(mlx_data.addr_init, mlx_data.windows_size_x, mlx_data.windows_size_y);
 	img.img_data = mlx_get_data_addr(img.img_ptr, &img.bpp, &img.size_line, &img.endian);
 
-
 	///projection of points
-	// t_point	**tab_copy;
 
 	// tab_copy = ft_point_projection(tab_point, mlx_data);
+
+	int	y = 0;
+	int	x;
 	
-	t_point test;
-	t_point test2;
-
-	test.x = 100;
-	test.y = 0;
-
-	test2.x = 100;
-	test2.y = 100;
-
-	tab_point = NULL;
-	
-	ft_put_line(mlx_data, img, test, test2);
+	while (y < mlx_data.map_size_y)
+	{
+		x = 0;
+		while (x < mlx_data.map_size_x)
+		{
+			if (x < mlx_data.map_size_x - 1)
+				ft_put_line(mlx_data, img, tab_point[y][x].proj, tab_point[y][x + 1].proj);
+			if (y < mlx_data.map_size_y - 1)
+				ft_put_line(mlx_data, img, tab_point[y][x].proj, tab_point[y + 1][x].proj);
+			x++;
+		}
+		y++;
+	}
 
 	// application de limage
 	mlx_put_image_to_window(mlx_data.addr_init, mlx_data.addr_windows, img.img_ptr, 0, 0);
 
-
 	///boucle event
 	mlx_hook(mlx_data.addr_windows, KEY_PRESS, KEY_PRESS_MASK, &ft_input, &mlx_data);
-	
 	mlx_loop(mlx_data.addr_init);
 
 }
@@ -129,43 +103,15 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 
-
+	////////////////////////////////creatin tab map
 
 	tab_point = ft_create_tab(mlx_data);
 	if (tab_point == NULL)
 		return (1);
 	ft_init_tab(tab_point, mlx_data, argv[1]);
 
-
-
-
-
-	///////////////////////print map
-	// int x;
-	// int y;
-
-
-	// y = 0;
-	// printf("\n");
-	// while (y < mlx_data.map_size_y)
-	// {
-	// 	x = 0;
-	// 	while (x < mlx_data.map_size_x)
-	// 	{
-	// 		printf("%d ", tab_point[y][x].z);
-			
-	// 		x++;
-	// 	}
-	// 	printf("\n");
-	// 	y++;
-	// }
-
-
-	
 	///////////////////////////////////creation mlx	
 
-	
-	
 	mlx_data.addr_init = mlx_init();
 	if (!mlx_data.addr_init)
 	{
@@ -183,10 +129,6 @@ int	main(int argc, char **argv)
 		return (1); //////error
 	}
 
-
-	////////////////////////////debut de rendu
-
-	//fait une copie de la map et modifie les valeurs / boucle pour chaque touches ?
 	ft_render(mlx_data, tab_point);
 
 

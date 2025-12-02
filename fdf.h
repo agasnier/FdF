@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/01 13:47:36 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/02 13:54:36 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,20 @@ typedef struct s_mlx
 	t_view	view;
 } t_mlx;
 
+typedef struct s_point_proj
+{
+	double	x;
+	double	y;
+	double	z;
+	int	color;
+} t_point_proj;
+
 typedef struct s_point
 {
 	int	x;
 	int	y;
 	int	z;
+	t_point_proj proj;
 	int	color;
 } t_point;
 
@@ -84,6 +93,10 @@ int	ft_atoi(char *line, int *j);
 
 // ft_control.c
 int	ft_input(int keycode, t_mlx *mlx);
+
+//ft_draw.c
+void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point_proj point);
+void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj point_b);
 
 
 
