@@ -6,11 +6,43 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/02 12:32:29 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:04:40 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void ft_apply_proj(t_point **tab_point, t_mlx mlx_data)
+{
+	int	y;
+	int	x;
+	double rad;
+	double cos_val;
+	double sin_val;
+	double proj_x;
+	double proj_y;
+		
+	rad = mlx_data.view.angle * 3.14159265358979323846 / 180;
+	cos_val = cos(rad);
+	sin_val = sin(rad);
+	
+	y = 0;
+	while (y < mlx_data.map_size_y)
+	{
+		x = 0;
+		while (x < mlx_data.map_size_x)
+		{
+			proj_x = ((double)tab_point[y][x].x - (double)tab_point[y][x].y) * cos_val * (double)mlx_data.view.zoom;
+			proj_y = ((double)tab_point[y][x].x + (double)tab_point[y][x].y) * sin_val * (double)mlx_data.view.zoom - (double)tab_point[y][x].z * (double)mlx_data.view.zoom;
+			proj_x += mlx_data.view.offset_x;
+			proj_y += mlx_data.view.offset_y;
+			tab_point[y][x].proj.x = (int)proj_x;
+			tab_point[y][x].proj.y = (int)proj_y;
+			x++;
+		}
+		y++;
+	}
+}
 
 void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y, int angle)
 {

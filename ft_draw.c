@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 10:35:37 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:10:09 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,42 @@ void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj p
 
 		
 	}
+}
+
+void	ft_draw(t_mlx mlx_data, t_point **tab_point, t_img img)
+{
+	int	y = 0;
+	int	x;
+	
+	while (y < mlx_data.map_size_y)
+	{
+		x = 0;
+		while (x < mlx_data.map_size_x)
+		{
+			if (x < mlx_data.map_size_x - 1)
+				ft_put_line(mlx_data, img, tab_point[y][x].proj, tab_point[y][x + 1].proj);
+			if (y < mlx_data.map_size_y - 1)
+				ft_put_line(mlx_data, img, tab_point[y][x].proj, tab_point[y + 1][x].proj);
+			x++;
+		}
+		y++;
+	}
+}
+
+void	ft_create_image(t_mlx mlx_data, t_point **tab_point)
+{
+	t_img	img;
+
+	///creation de l'img
+	img.img_ptr = mlx_new_image(mlx_data.addr_init, mlx_data.windows_size_x, mlx_data.windows_size_y);
+	img.img_data = mlx_get_data_addr(img.img_ptr, &img.bpp, &img.size_line, &img.endian);
+	mlx_data.img = img;
+	///projection of points
+
+	// tab_copy = ft_point_projection(tab_point, mlx_data);
+	ft_draw(mlx_data, tab_point, img);
+
+
+	// application de limage
+	mlx_put_image_to_window(mlx_data.addr_init, mlx_data.addr_windows, img.img_ptr, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/02 13:54:36 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:09:27 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,6 @@ typedef struct s_view
 	int	angle;
 } t_view;
 
-typedef struct s_mlx
-{
-	void	*addr_init;
-	void	*addr_windows;
-	char	*windows_title;
-	int		windows_size_x;
-	int		windows_size_y;
-	int		map_size_x;
-	int		map_size_y;
-	t_view	view;
-} t_mlx;
-
 typedef struct s_point_proj
 {
 	double	x;
@@ -78,9 +66,24 @@ typedef struct s_img
 	
 } t_img;
 
+typedef struct s_mlx
+{
+	void	*addr_init;
+	void	*addr_windows;
+	char	*windows_title;
+	int		windows_size_x;
+	int		windows_size_y;
+	int		map_size_x;
+	int		map_size_y;
+	t_img	img;
+	t_view	view;
+	t_point	**tab_point;
+} t_mlx;
+
 
 
 //ft_initialization.c
+void	ft_apply_proj(t_point **tab_point, t_mlx mlx_data);
 void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y, int angle);
 void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line);
 int		ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv);
@@ -97,6 +100,8 @@ int	ft_input(int keycode, t_mlx *mlx);
 //ft_draw.c
 void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point_proj point);
 void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj point_b);
+void	ft_draw(t_mlx mlx_data, t_point **tab_point, t_img img);
+void	ft_create_image(t_mlx mlx_data, t_point **tab_point);
 
 
 
