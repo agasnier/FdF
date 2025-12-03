@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 15:09:50 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:26:16 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	ft_proj(t_point point, t_point_proj *point_proj, t_view view)
 	xt = tmp_x * cos(view.angle_z) - tmp_y * sin(view.angle_z);
 	yt = tmp_x * sin(view.angle_z) + tmp_y * cos(view.angle_z);
 
-	point_proj->x = (xt * view.zoom) + view.offset_x;
-	point_proj->y = (yt * view.zoom) + view.offset_y;
-	point_proj->z = (zt * view.zoom);
+	point_proj->x = (int)((xt * view.zoom) + view.offset_x);
+	point_proj->y = (int)((yt * view.zoom) + view.offset_y);
+	point_proj->z = (int)(zt * view.zoom);
 	
 	
 }
@@ -51,15 +51,6 @@ void ft_apply_proj(t_point **tab_point, t_mlx mlx_data)
 {
 	int	y;
 	int	x;
-	// double rad;
-	// double cos_val;
-	// double sin_val;
-	// double proj_x;
-	// double proj_y;
-		
-	// rad = 30 * 3.14159265358979323846 / 180;
-	// cos_val = cos(rad);
-	// sin_val = sin(rad);
 	
 	y = 0;
 	while (y < mlx_data.map_size_y)
