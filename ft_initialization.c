@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 15:26:16 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 16:21:02 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,25 @@ void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y, int angl
 	mlx_data->view = view;	
 }
 
+int	ft_take_color(char *line, int *i)
+{
+	char	color[8];
+	int		y;
+
+	y = 0;
+	while (line[*i] != ' ')
+	{
+		color[y] = line[*i];
+		i++;
+		y++;
+	}
+	color[y] = '\0';
+	return ((int)color);
+
+
+	
+}
+
 void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 {
 	int x;
@@ -95,8 +114,7 @@ void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 		tab_point[x].x = x;
 		tab_point[x].z = ft_atoi(line, &i);
 		if (line[i] == ',')
-			while (line[i] != ' ') //////////////////////////////////////////color
-				i++;	
+			tab_point[x].color = ft_take_color(line, &i);	
 		x++;
 
 	}

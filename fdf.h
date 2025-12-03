@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 15:29:34 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 16:09:59 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,27 @@
 # include "ressources/minilibx-linux/mlx.h"
 # include "get_next_line/get_next_line.h"
 
-# include <stdio.h>
-
 # include <fcntl.h>
-# include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
 
-# define KEY_ESC 0xFF1B
-# define KEY_UP    0xFF52
-# define KEY_DOWN  0xFF54
-# define KEY_LEFT  0xFF51
-# define KEY_RIGHT 0xFF53
-# define KEY_PRESS 2
+# define KEY_ESC	0xFF1B
+# define KEY_UP		0xFF52
+# define KEY_DOWN	0xFF54
+# define KEY_LEFT	0xFF51
+# define KEY_RIGHT	0xFF53
+# define KEY_PLUS	0xFFAB
+# define KEY_MINUS	0xFFAD
+# define KEY_PRESS	2
 # define KEY_PRESS_MASK (1L<<0)
 
 typedef struct s_view
 {
-	int	zoom;
-	int	offset_x;
-	int	offset_y;
+	int		zoom;
+	int		offset_x;
+	int		offset_y;
 	double	angle_x;
-	double angle_y;
+	double	angle_y;
 	double	angle_z;
 } t_view;
 
@@ -51,11 +50,11 @@ typedef struct s_point_proj
 
 typedef struct s_point
 {
-	int	x;
-	int	y;
-	int	z;
-	t_point_proj proj;
-	int	color;
+	int				x;
+	int				y;
+	int				z;
+	t_point_proj	proj;
+	int				color;
 } t_point;
 
 typedef struct s_img
