@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:08:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 11:29:43 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 14:59:04 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_input(int keycode, t_mlx *mlx_data)
 	if (keycode == KEY_RIGHT)
 	{
 		mlx_destroy_image(mlx_data->addr_init, mlx_data->img.img_ptr);
-		mlx_data->view.angle += 5;
+		// mlx_data->view.angle += 5;
 		ft_apply_proj(mlx_data->tab_point, *mlx_data);
 		ft_create_image(mlx_data, mlx_data->tab_point);
 	}

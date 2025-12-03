@@ -6,25 +6,60 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 11:04:40 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:09:50 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+void	ft_proj(t_point point, t_point_proj *point_proj, t_view view)
+{
+	double	xt;
+	double	yt;
+	double	zt;
+	double tmp_y;
+	double tmp_x;
+
+	xt = (double)point.x;
+	yt = (double)point.y;
+	zt = (double)point.z;
+	
+	/////rotate x
+	tmp_y = yt;
+	yt = tmp_y * cos(view.angle_x) - zt * sin(view.angle_x);
+	zt = tmp_y * sin(view.angle_x) + zt * cos(view.angle_x);
+
+	//rotate y
+	tmp_x = xt;
+	xt = tmp_x * cos(view.angle_y) + zt * sin(view.angle_y);
+	zt = -tmp_x * sin(view.angle_y) + zt * cos(view.angle_y);
+
+	//rotate z
+	tmp_x = xt;
+	tmp_y = yt;
+	xt = tmp_x * cos(view.angle_z) - tmp_y * sin(view.angle_z);
+	yt = tmp_x * sin(view.angle_z) + tmp_y * cos(view.angle_z);
+
+	point_proj->x = (xt * view.zoom) + view.offset_x;
+	point_proj->y = (yt * view.zoom) + view.offset_y;
+	point_proj->z = (zt * view.zoom);
+	
+	
+}
+
 void ft_apply_proj(t_point **tab_point, t_mlx mlx_data)
 {
 	int	y;
 	int	x;
-	double rad;
-	double cos_val;
-	double sin_val;
-	double proj_x;
-	double proj_y;
+	// double rad;
+	// double cos_val;
+	// double sin_val;
+	// double proj_x;
+	// double proj_y;
 		
-	rad = mlx_data.view.angle * 3.14159265358979323846 / 180;
-	cos_val = cos(rad);
-	sin_val = sin(rad);
+	// rad = 30 * 3.14159265358979323846 / 180;
+	// cos_val = cos(rad);
+	// sin_val = sin(rad);
 	
 	y = 0;
 	while (y < mlx_data.map_size_y)
@@ -32,12 +67,7 @@ void ft_apply_proj(t_point **tab_point, t_mlx mlx_data)
 		x = 0;
 		while (x < mlx_data.map_size_x)
 		{
-			proj_x = ((double)tab_point[y][x].x - (double)tab_point[y][x].y) * cos_val * (double)mlx_data.view.zoom;
-			proj_y = ((double)tab_point[y][x].x + (double)tab_point[y][x].y) * sin_val * (double)mlx_data.view.zoom - (double)tab_point[y][x].z * (double)mlx_data.view.zoom;
-			proj_x += mlx_data.view.offset_x;
-			proj_y += mlx_data.view.offset_y;
-			tab_point[y][x].proj.x = (int)proj_x;
-			tab_point[y][x].proj.y = (int)proj_y;
+			ft_proj(tab_point[y][x], &tab_point[y][x].proj, mlx_data.view);
 			x++;
 		}
 		y++;
@@ -51,7 +81,12 @@ void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y, int angl
 	view.zoom = zoom;
 	view.offset_x = offset_x;
 	view.offset_y = offset_y;
-	view.angle = angle;
+
+	angle = 0;
+
+	view.angle_x = 0;
+	view.angle_y = 35 * 3.14159265358979323846 / 180;
+	view.angle_z = 45 * 3.14159265358979323846 / 180;
 
 	mlx_data->view = view;	
 }

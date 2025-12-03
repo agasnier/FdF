@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 11:29:21 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 14:54:26 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ typedef struct s_view
 	int	zoom;
 	int	offset_x;
 	int	offset_y;
-	int	angle;
+	double	angle_x;
+	double angle_y;
+	double	angle_z;
 } t_view;
 
 typedef struct s_point_proj
@@ -83,6 +85,7 @@ typedef struct s_mlx
 
 
 //ft_initialization.c
+void	ft_rotate(t_point point, t_point_proj *point_proj, t_view view);
 void	ft_apply_proj(t_point **tab_point, t_mlx mlx_data);
 void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y, int angle);
 void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line);
