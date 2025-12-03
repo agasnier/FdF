@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/02 16:53:32 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:35:37 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point_proj point)
 {
 	void	*pixel;
 
-	if (point.x < 0 || point.x > mlx_data.windows_size_x || point.y < 0 || point.y > mlx_data.windows_size_x) //// a changer par map size
+	if (point.x < 0 || point.x >= mlx_data.windows_size_x || point.y < 0 || point.y >= mlx_data.windows_size_y) //// a changer par map size
 		return ;
 
 
@@ -30,71 +30,61 @@ void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point_proj point)
 
 void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj point_b)
 {
-	float	y;
-	float	slope;
-	
-	
-	if (point_a.x > point_b.x)
-		ft_put_line(mlx_data, img, point_b, point_a);
+	int		dx;
+	int		dy;
+	int		err;
+	int		err2;
+	int		sx;
+	int		sy;
 
+	if (point_a.x > point_b.x)
+	{
+		dx = point_a.x - point_b.x;
+		sx = -1;
+	}
 	else
 	{
-		slope = ((float)point_b.y - (float)point_a.y)/((float)point_b.x - (float)point_a.x);
-		y = 0;
+		dx = point_b.x - point_a.x;
+		sx = 1;
+	}
 		
-		if (point_a.x == point_b.x)
-			while (point_a.y != point_b.y)
-			{
-				ft_put_pixel(mlx_data, img, point_a);
-				point_a.y++;
-			}
-		else if (slope <= 1 && slope >= -1)
+		
+	if (point_a.y > point_b.y)
+	{
+		dy = point_a.y - point_b.y;
+		sy = -1;
+	}
+	else
+	{
+		dy = point_b.y - point_a.y;
+		sy = 1;
+	}
+
+	if (dx > dy)
+		err = dx / 2;
+	else	
+		err = -dy / 2;
+
+	while (1)
+	{
+		ft_put_pixel(mlx_data, img, point_a);
+		if (point_a.x == point_b.x && point_a.y == point_b.y)
+			break ;
+
+		err2 = err;
+		
+		if (err2 > -dx)
 		{
-			while (point_a.x != point_b.x)
-			{
-				y += slope;
-				while (y > 1)
-				{
-					ft_put_pixel(mlx_data, img, point_a);
-					point_a.y++;
-					y--;
-				}
-				ft_put_pixel(mlx_data, img, point_a);
-				point_a.x++;
-			}
-		}
-		else if (slope > 1 || slope < -1)
-		{
-			while (point_a.y != point_b.y)
-			{
-				if (slope > 1)
-				{
-					y += slope;
-					while (y > 1)
-					{
-						ft_put_pixel(mlx_data, img, point_a);
-						point_a.x++;
-						y--;
-					}
-					ft_put_pixel(mlx_data, img, point_a);
-					point_a.y++;
-				}
-				else
-				{
-					y -= slope;
-					while (y < -1)
-					{
-						ft_put_pixel(mlx_data, img, point_a);
-						point_a.x--;
-						y++;
-					}
-					ft_put_pixel(mlx_data, img, point_a);
-					point_a.y++;
-				}
-			}
+			err -= dy;
+			point_a.x += sx;
 		}
 		
-		
+		if (err2 < dy)
+		{
+			err += dx;
+			point_a.y += sy;
+		}
+
 		
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/02 15:35:12 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:38:34 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_render(t_mlx mlx_data, t_point **tab_point)
 	t_img	img;
 
 	////////setting view && apply
-	ft_set_view(&mlx_data, 20, mlx_data.windows_size_x/2, mlx_data.windows_size_y/2, 30);
+	ft_set_view(&mlx_data, 20, mlx_data.windows_size_x/2, mlx_data.windows_size_y/2, 210);
 
 	ft_apply_proj(tab_point, mlx_data);
 
