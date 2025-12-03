@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 11:09:27 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:29:21 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	ft_input(int keycode, t_mlx *mlx);
 void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point_proj point);
 void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj point_b);
 void	ft_draw(t_mlx mlx_data, t_point **tab_point, t_img img);
-void	ft_create_image(t_mlx mlx_data, t_point **tab_point);
+void	ft_create_image(t_mlx *mlx_data, t_point **tab_point);
 
 
 

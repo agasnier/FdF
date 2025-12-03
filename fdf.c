@@ -6,27 +6,27 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 11:03:44 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:55:35 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 
-void	ft_render(t_mlx mlx_data, t_point **tab_point)
+void	ft_render(t_mlx *mlx_data, t_point **tab_point)
 {
 
 	////////setting view && apply
-	ft_set_view(&mlx_data, 20, mlx_data.windows_size_x/2, mlx_data.windows_size_y/2, 30);
-	ft_apply_proj(tab_point, mlx_data);
+	ft_set_view(mlx_data, 20, mlx_data->windows_size_x/2, mlx_data->windows_size_y/2, 30);
+	ft_apply_proj(tab_point, *mlx_data);
 
 	////// draw
 	ft_create_image(mlx_data, tab_point);
 
 
 	///boucle event
-	mlx_hook(mlx_data.addr_windows, KEY_PRESS, KEY_PRESS_MASK, &ft_input, &mlx_data);
-	mlx_loop(mlx_data.addr_init);
+	mlx_hook(mlx_data->addr_windows, KEY_PRESS, KEY_PRESS_MASK, &ft_input, &mlx_data);
+	mlx_loop(mlx_data->addr_init);
 
 }
 
@@ -71,7 +71,7 @@ int	main(int argc, char **argv)
 		return (1); //////error
 	}
 
-	ft_render(mlx_data, tab_point);
+	ft_render(&mlx_data, tab_point);
 
 
 	return (0);
