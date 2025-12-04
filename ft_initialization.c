@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/04 13:36:49 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/04 16:02:07 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_proj(t_point point, t_point_proj *point_proj, t_view view)
 	point_proj->x = (int)((xt * view.zoom) + view.offset_x);
 	point_proj->y = (int)((yt * view.zoom) + view.offset_y);
 	point_proj->z = (int)(zt * view.zoom);
+	point_proj->color = point.color;
 	
 	
 }
@@ -100,16 +101,17 @@ int	ft_hexa_to_int(char *color)
 int	ft_take_color(char *line, int *i)
 {
 	char	color[7];
-	char	base[] = "0123456789ABCDEF";
+	char	base[] = "0123456789abcdef";
 	int		y;
 
 	y = 0;
 	(*i) += 3;
-	while (ft_in_base(&line[*i], base))
+	while (ft_in_base(&line[*i], base) < 0)
 	{
 		color[y] = line[*i];
 		(*i)++;
 		y++;
+		
 	}
 	color[y] = '\0';
 	return (ft_atoi_base(color, base));
@@ -133,9 +135,11 @@ void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 		if (line[i] == ',')
 		{
 			tab_point[x].color = ft_take_color(line, &i);
+			// while (line[i] && (line[i] != ' ' || line[i] != '\n'))
+			// 	i++;
 		}
 		else
-			tab_point[x].color = 16776960;
+			tab_point[x].color = 16711680; /////////////////////////////16776960 //16711680
 		x++;
 
 	}

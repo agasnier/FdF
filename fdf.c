@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/04 12:41:32 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:41:41 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	main(int argc, char **argv)
 	}
 
 	mlx_data.windows_title = "fdf";
-	mlx_data.windows_size_x = 1000;
-	mlx_data.windows_size_y = mlx_data.windows_size_x;
+	mlx_data.windows_size_x = 1920;
+	mlx_data.windows_size_y = 1080;
 	
 
 	mlx_data.addr_windows = mlx_new_window(mlx_data.addr_init, mlx_data.windows_size_x, mlx_data.windows_size_y, mlx_data.windows_title);
