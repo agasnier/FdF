@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 11:56:33 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/04 12:53:49 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point_proj point)
 
 	pixel = img.img_data + ((int)point.y * img.size_line) + ((int)point.x * (img.bpp /8));
 
-	point.color = 0xFF0000; /////////////////////////////
+	//point.color = point.color; /////////////////////////////16776960 //16711680
 	
-	*(unsigned int*)pixel = point.color;
+	*(unsigned int*)pixel = (unsigned int)point.color;
 }
 
 void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj point_b)

@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 16:09:59 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/04 12:50:06 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,12 @@ void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj p
 void	ft_draw(t_mlx mlx_data, t_point **tab_point, t_img img);
 void	ft_create_image(t_mlx *mlx_data, t_point **tab_point);
 
-
-
-
+//ft_hex_to_int.c
+int	ft_str_len(char *str);
+int	ft_verif_base(char *base, int len);
+char	*ft_atoi_2(char *str, int *sign);
+int	ft_in_base(char *str, char *base);
+int	ft_atoi_base(char *str, char *base);
 
 
 

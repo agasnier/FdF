@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 16:21:02 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:36:49 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,24 +82,41 @@ void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y, int angl
 	mlx_data->view = view;	
 }
 
-int	ft_take_color(char *line, int *i)
+#include <stdio.h>
+
+int	ft_hexa_to_int(char *color)
 {
-	char	color[8];
-	int		y;
+	int	i;
 
-	y = 0;
-	while (line[*i] != ' ')
-	{
-		color[y] = line[*i];
-		i++;
-		y++;
-	}
-	color[y] = '\0';
-	return ((int)color);
+	i = 2;
+	color[i] = 'x';
+	
 
+	return (0);
 
 	
 }
+
+int	ft_take_color(char *line, int *i)
+{
+	char	color[7];
+	char	base[] = "0123456789ABCDEF";
+	int		y;
+
+	y = 0;
+	(*i) += 3;
+	while (ft_in_base(&line[*i], base))
+	{
+		color[y] = line[*i];
+		(*i)++;
+		y++;
+	}
+	color[y] = '\0';
+	return (ft_atoi_base(color, base));
+
+}
+
+
 
 void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 {
@@ -114,7 +131,11 @@ void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 		tab_point[x].x = x;
 		tab_point[x].z = ft_atoi(line, &i);
 		if (line[i] == ',')
-			tab_point[x].color = ft_take_color(line, &i);	
+		{
+			tab_point[x].color = ft_take_color(line, &i);
+		}
+		else
+			tab_point[x].color = 16776960;
 		x++;
 
 	}

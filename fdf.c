@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 14:55:05 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/04 12:41:32 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	ft_render(t_mlx *mlx_data, t_point **tab_point)
 	ft_set_view(mlx_data, 20, mlx_data->windows_size_x/2, mlx_data->windows_size_y/2, 30);
 	ft_apply_proj(tab_point, *mlx_data);
 
-	////// draw
+	//// draw
 	ft_create_image(mlx_data, tab_point);
 
 
-	///boucle event
+	//boucle event
 	mlx_hook(mlx_data->addr_windows, KEY_PRESS, KEY_PRESS_MASK, &ft_input, mlx_data);
 	mlx_loop(mlx_data->addr_init);
 
