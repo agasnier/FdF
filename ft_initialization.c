@@ -6,13 +6,13 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/04 16:02:07 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/08 16:50:52 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_proj(t_point point, t_point_proj *point_proj, t_view view)
+void	ft_proj(t_point point, t_point_proj *point_proj, t_view view, t_mlx mlx_data)
 {
 	double	xt;
 	double	yt;
@@ -20,8 +20,8 @@ void	ft_proj(t_point point, t_point_proj *point_proj, t_view view)
 	double tmp_y;
 	double tmp_x;
 
-	xt = (double)point.x;
-	yt = (double)point.y;
+	xt = (double)(point.x - mlx_data.map_size_x/2);
+	yt = (double)(point.y - mlx_data.map_size_y/2);
 	zt = (double)point.z;
 	
 	/////rotate x
@@ -59,14 +59,14 @@ void ft_apply_proj(t_point **tab_point, t_mlx mlx_data)
 		x = 0;
 		while (x < mlx_data.map_size_x)
 		{
-			ft_proj(tab_point[y][x], &tab_point[y][x].proj, mlx_data.view);
+			ft_proj(tab_point[y][x], &tab_point[y][x].proj, mlx_data.view, mlx_data);
 			x++;
 		}
 		y++;
 	}
 }
 
-void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y, int angle)
+void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y)
 {
 	t_view view;
 
@@ -74,7 +74,6 @@ void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y, int angl
 	view.offset_x = offset_x;
 	view.offset_y = offset_y;
 
-	angle = 0;
 
 	view.angle_x = 0;
 	view.angle_y = 35 * 3.14159265358979323846 / 180;
@@ -106,7 +105,7 @@ int	ft_take_color(char *line, int *i)
 
 	y = 0;
 	(*i) += 3;
-	while (ft_in_base(&line[*i], base) < 0)
+	while (ft_in_base(&line[*i], base) >= 0)
 	{
 		color[y] = line[*i];
 		(*i)++;

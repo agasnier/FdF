@@ -6,29 +6,40 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/04 12:50:06 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/08 16:57:22 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "ressources/minilibx-linux/mlx.h"
+# include "ressources/minilibx_macos/mlx.h"
 # include "get_next_line/get_next_line.h"
 
 # include <fcntl.h>
 # include <stdlib.h>
 # include <math.h>
 
-# define KEY_ESC	0xFF1B
-# define KEY_UP		0xFF52
-# define KEY_DOWN	0xFF54
-# define KEY_LEFT	0xFF51
-# define KEY_RIGHT	0xFF53
-# define KEY_PLUS	0xFFAB
-# define KEY_MINUS	0xFFAD
+// # define KEY_ESC		0xFF1B
+// # define KEY_UP		0xFF52
+// # define KEY_DOWN	0xFF54
+// # define KEY_LEFT	0xFF51
+// # define KEY_RIGHT	0xFF53
+// # define KEY_PLUS	0xFFAB
+// # define KEY_MINUS	0xFFAD
+
 # define KEY_PRESS	2
 # define KEY_PRESS_MASK (1L<<0)
+
+
+// MAC
+# define KEY_ESC    53
+# define KEY_LEFT   123
+# define KEY_RIGHT  124
+# define KEY_DOWN   125
+# define KEY_UP     126
+# define KEY_PLUS   69
+# define KEY_MINUS  78
 
 typedef struct s_view
 {
@@ -86,7 +97,7 @@ typedef struct s_mlx
 //ft_initialization.c
 void	ft_rotate(t_point point, t_point_proj *point_proj, t_view view);
 void	ft_apply_proj(t_point **tab_point, t_mlx mlx_data);
-void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y, int angle);
+void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y);
 void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line);
 int		ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv);
 t_point	**ft_create_tab(t_mlx mlx_data);
