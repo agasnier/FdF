@@ -6,13 +6,13 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:08:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/03 16:01:19 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/09 16:35:02 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_input(int keycode, t_mlx *mlx_data)
+int	ft_input_key(int keycode, t_mlx *mlx_data)
 {
 	double	incr;
 
@@ -24,9 +24,6 @@ int	ft_input(int keycode, t_mlx *mlx_data)
 	}
 	else if (keycode == KEY_RIGHT || keycode == KEY_LEFT)
 	{
-		double	incr;
-
-		incr = 1 * 3.14159265358979323846 / 180;
 		if (keycode == KEY_LEFT)
 			incr *= -1;
 		mlx_destroy_image(mlx_data->addr_init, mlx_data->img.img_ptr);
@@ -45,13 +42,32 @@ int	ft_input(int keycode, t_mlx *mlx_data)
 	}
 	else if (keycode == KEY_PLUS || keycode == KEY_MINUS)
 	{
-		incr = 1;
 		if (keycode == KEY_MINUS)
+			incr *= -1;
+		mlx_destroy_image(mlx_data->addr_init, mlx_data->img.img_ptr);
+		mlx_data->view.z_scale += incr;
+		ft_apply_proj(mlx_data->tab_point, *mlx_data);
+		ft_create_image(mlx_data, mlx_data->tab_point);
+	}
+	return (0);
+}
+
+int	ft_input_mouse(int keycode, int x, int y, t_mlx *mlx_data)
+{
+	double	incr;
+	(void)x;
+	(void)y;
+
+	if (keycode == SCROLL_UP || keycode == SCROLL_DOWN)
+	{
+		incr = 1;
+		if (keycode == SCROLL_DOWN)
 			incr *= -1;
 		mlx_destroy_image(mlx_data->addr_init, mlx_data->img.img_ptr);
 		mlx_data->view.zoom += (int)incr;
 		ft_apply_proj(mlx_data->tab_point, *mlx_data);
 		ft_create_image(mlx_data, mlx_data->tab_point);
 	}
+
 	return (0);
 }
