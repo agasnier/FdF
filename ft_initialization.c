@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/09 16:35:23 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/11 15:52:15 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,25 @@ void	ft_proj(t_point point, t_point_proj *point_proj, t_view view, t_mlx mlx_dat
 	yt = (double)(point.y - mlx_data.map_size_y/2);
 	zt = (double)(point.z) * view.z_scale;
 	
-	//rotate z
-	tmp_x = xt;
+	/////rotate x
 	tmp_y = yt;
-	xt = tmp_x * cos(view.angle_z) - tmp_y * sin(view.angle_z);
-	yt = tmp_x * sin(view.angle_z) + tmp_y * cos(view.angle_z);
-
+	yt = tmp_y * cos(view.angle_x) - zt * sin(view.angle_x);
+	zt = tmp_y * sin(view.angle_x) + zt * cos(view.angle_x);
 
 	//rotate y
 	tmp_x = xt;
 	xt = tmp_x * cos(view.angle_y) + zt * sin(view.angle_y);
 	zt = -tmp_x * sin(view.angle_y) + zt * cos(view.angle_y);
 
-	/////rotate x
+	//rotate z
+	tmp_x = xt;
 	tmp_y = yt;
-	yt = tmp_y * cos(view.angle_x) - zt * sin(view.angle_x);
-	zt = tmp_y * sin(view.angle_x) + zt * cos(view.angle_x);
+	xt = tmp_x * cos(view.angle_z) - tmp_y * sin(view.angle_z);
+	yt = tmp_x * sin(view.angle_z) + tmp_y * cos(view.angle_z);
 
-	point_proj->x = (int)((xt * view.zoom) + view.offset_x);
-	point_proj->y = (int)((yt * view.zoom) + view.offset_y);
-	point_proj->z = (int)(zt * view.zoom);
+	point_proj->x = xt * view.zoom + view.offset_x;
+	point_proj->y = yt * view.zoom + view.offset_y;
+	point_proj->z = zt * view.zoom;
 	point_proj->color = point.color;
 	
 	
@@ -67,7 +66,7 @@ void ft_apply_proj(t_point **tab_point, t_mlx mlx_data)
 	}
 }
 
-void	ft_set_view(t_mlx *mlx_data, int zoom, int offset_x, int offset_y, int z_scale)
+void	ft_set_view(t_mlx *mlx_data, double zoom, double offset_x, double offset_y, double z_scale)
 {
 	t_view view;
 
@@ -123,7 +122,7 @@ void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 			tab_point[x].color = ft_take_color(line, &i);
 		}
 		else
-			tab_point[x].color = 16711680; /////////////////////////////16776960 //16711680
+			tab_point[x].color = 0xFFFFFF;
 		x++;
 
 	}

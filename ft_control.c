@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:08:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/09 16:35:02 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/11 15:43:59 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_input_key(int keycode, t_mlx *mlx_data)
 {
 	double	incr;
 
-	incr = 1 * 3.14159265358979323846 / 180;
+	incr = 0.01;
 	if (keycode == KEY_ESC)
 	{
 		mlx_destroy_window(mlx_data->addr_init, mlx_data->addr_windows); /// + free malloc
@@ -46,6 +46,26 @@ int	ft_input_key(int keycode, t_mlx *mlx_data)
 			incr *= -1;
 		mlx_destroy_image(mlx_data->addr_init, mlx_data->img.img_ptr);
 		mlx_data->view.z_scale += incr;
+		ft_apply_proj(mlx_data->tab_point, *mlx_data);
+		ft_create_image(mlx_data, mlx_data->tab_point);
+	}
+	else if (keycode == KEY_W || keycode == KEY_S)
+	{
+		incr = 10;
+		if (keycode == KEY_W)
+			incr *= -1;
+		mlx_destroy_image(mlx_data->addr_init, mlx_data->img.img_ptr);
+		mlx_data->view.offset_y += incr;
+		ft_apply_proj(mlx_data->tab_point, *mlx_data);
+		ft_create_image(mlx_data, mlx_data->tab_point);
+	}
+	else if (keycode == KEY_A || keycode == KEY_D)
+	{
+		incr = 10;
+		if (keycode == KEY_A)
+			incr *= -1;
+		mlx_destroy_image(mlx_data->addr_init, mlx_data->img.img_ptr);
+		mlx_data->view.offset_x += incr;
 		ft_apply_proj(mlx_data->tab_point, *mlx_data);
 		ft_create_image(mlx_data, mlx_data->tab_point);
 	}

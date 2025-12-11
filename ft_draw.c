@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/09 15:33:14 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/11 15:40:19 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point_proj point)
 
 void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj point_b)
 {
-	int		dx;
-	int		dy;
-	int		err;
-	int		err2;
-	int		sx;
-	int		sy;
+	double		dx;
+	double		dy;
+	double		err;
+	double		err2;
+	double		sx;
+	double		sy;
 
 	point_a.color = point_b.color;
 	if (point_a.x > point_b.x)
