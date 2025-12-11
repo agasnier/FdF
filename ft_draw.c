@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/11 19:13:29 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/11 20:03:40 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,28 @@ static void	ft_put_pixel(t_mlx mlx_data, t_point_proj point)
 	pixel = mlx_data.img.img_data + ((int)point.y * mlx_data.img.size_line) + ((int)point.x * (mlx_data.img.bpp /8));	
 	*(unsigned int*)pixel = (unsigned int)point.color;
 }
+
+// int	ft_get_gradient(t_point_proj point_a, t_point_proj point_b, int ax, int ay)
+// {
+// 	int	pourcent_x;
+// 	int	pourcent_y;
+// 	int	pourcent;
+// 	int	r;
+// 	int	g;
+// 	int	b;
+
+// 	pourcent_x = (ax - (int)point_a.x) / ((int)point_b.x - (int)point_a.x);
+// 	pourcent_y = (ay - (int)point_a.y) / ((int)point_b.y - (int)point_a.y);
+// 	pourcent = (pourcent_x + pourcent_y) / 2;
+
+// 	r = 
+	
+
+
+
+
+	
+// }
 
 static void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point_b)
 {
