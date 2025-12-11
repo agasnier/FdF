@@ -6,110 +6,17 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/11 16:42:37 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/11 18:33:25 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_proj(t_point point, t_point_proj *point_proj, t_view view, t_mlx mlx_data)
+static void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 {
-	double	xt;
-	double	yt;
-	double	zt;
-	double tmp_y;
-	double tmp_x;
-
-	xt = (double)(point.x - mlx_data.map_size_x/2);
-	yt = (double)(point.y - mlx_data.map_size_y/2);
-	zt = (double)(point.z) * view.z_scale;
-	
-	/////rotate x
-	tmp_y = yt;
-	yt = tmp_y * cos(view.angle_x) - zt * sin(view.angle_x);
-	zt = tmp_y * sin(view.angle_x) + zt * cos(view.angle_x);
-
-	//rotate y
-	tmp_x = xt;
-	xt = tmp_x * cos(view.angle_y) + zt * sin(view.angle_y);
-	zt = -tmp_x * sin(view.angle_y) + zt * cos(view.angle_y);
-
-	//rotate z
-	tmp_x = xt;
-	tmp_y = yt;
-	xt = tmp_x * cos(view.angle_z) - tmp_y * sin(view.angle_z);
-	yt = tmp_x * sin(view.angle_z) + tmp_y * cos(view.angle_z);
-
-	point_proj->x = xt * view.zoom + view.offset_x;
-	point_proj->y = yt * view.zoom + view.offset_y;
-	point_proj->z = zt * view.zoom;
-	point_proj->color = point.color;
-	
-	
-}
-
-void ft_apply_proj(t_point **tab_point, t_mlx mlx_data)
-{
-	int	y;
 	int	x;
-	
-	y = 0;
-	while (y < mlx_data.map_size_y)
-	{
-		x = 0;
-		while (x < mlx_data.map_size_x)
-		{
-			ft_proj(tab_point[y][x], &tab_point[y][x].proj, mlx_data.view, mlx_data);
-			x++;
-		}
-		y++;
-	}
-}
+	int	i;
 
-void	ft_set_view(t_mlx *mlx_data, double zoom, double offset_x, double offset_y, double z_scale)
-{
-	t_view view;
-
-	view.zoom = zoom;
-	view.offset_x = offset_x;
-	view.offset_y = offset_y;
-	view.z_scale = z_scale;
-
-
-	view.angle_x = 0.615472907;
-	view.angle_y = 0;
-	view.angle_z = 0.785398163;
-
-	mlx_data->view = view;	
-}
-
-int	ft_take_color(char *line, int *i)
-{
-	char	color[7];
-	char	base[] = "0123456789abcdef";
-	int		y;
-
-	y = 0;
-	(*i) += 3;
-	while (ft_in_base(&line[*i], base) >= 0)
-	{
-		color[y] = line[*i];
-		(*i)++;
-		y++;
-		
-	}
-	color[y] = '\0';
-	return (ft_atoi_base(color, base));
-
-}
-
-
-
-void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
-{
-	int x;
-	int i;
-	
 	i = 0;
 	x = 0;
 	while (x < mlx_data.map_size_x)
@@ -124,7 +31,6 @@ void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 		else
 			tab_point[x].color = 0xFFFFFF;
 		x++;
-
 	}
 }
 
@@ -137,7 +43,6 @@ int	ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv)
 	fd = open(argv, O_RDONLY);
 	if (fd < 0)
 		return (1);
-
 	y = 0;
 	while (1)
 	{
@@ -154,13 +59,12 @@ int	ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv)
 
 t_point	**ft_create_tab(t_mlx mlx_data)
 {
-	t_point **tab_point;
+	t_point	**tab_point;
 	int		i;
-	
-	tab_point = malloc(sizeof(t_point*) * (mlx_data.map_size_y + 1));
+
+	tab_point = malloc(sizeof(t_point *) * (mlx_data.map_size_y + 1));
 	if (!tab_point)
 		return (NULL);
-
 	i = 0;
 	while (i < mlx_data.map_size_y)
 	{
@@ -169,5 +73,5 @@ t_point	**ft_create_tab(t_mlx mlx_data)
 			return (NULL); /////////////////////////////////// + free all 
 		i++;
 	}
-	return (tab_point);	
+	return (tab_point);
 }

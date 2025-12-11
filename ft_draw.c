@@ -6,29 +6,23 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/11 17:25:45 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/11 19:13:29 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point_proj point)
+static void	ft_put_pixel(t_mlx mlx_data, t_point_proj point)
 {
 	void	*pixel;
 
-	if (point.x < 0 || point.x >= (int)mlx_data.windows_size_x || point.y < 0 || point.y >= (int)mlx_data.windows_size_y) //// a changer par map size
+	if (point.x < 0 || (int)point.x >= mlx_data.windows_size_x || point.y < 0 || (int)point.y >= mlx_data.windows_size_y)
 		return ;
-
-
-
-	pixel = img.img_data + ((int)point.y * img.size_line) + ((int)point.x * (img.bpp /8));
-
-	//point.color = point.color; /////////////////////////////16776960 //16711680
-	
+	pixel = mlx_data.img.img_data + ((int)point.y * mlx_data.img.size_line) + ((int)point.x * (mlx_data.img.bpp /8));	
 	*(unsigned int*)pixel = (unsigned int)point.color;
 }
 
-void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj point_b)
+static void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point_b)
 {
 	int		ax;
 	int		ay;
@@ -78,7 +72,7 @@ void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj p
 
 	while (1)
 	{
-		ft_put_pixel(mlx_data, img, (t_point_proj){ax, ay, 0, point_b.color});
+		ft_put_pixel(mlx_data, (t_point_proj){ax, ay, 0, point_b.color});
 		if (ax == bx && ay == by)
 			break ;
 
@@ -100,7 +94,7 @@ void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj p
 	}
 }
 
-void	ft_draw(t_mlx mlx_data, t_point **tab_point, t_img img)
+static void	ft_draw(t_mlx mlx_data, t_point **tab_point)
 {
 	int	y = 0;
 	int	x;
@@ -111,9 +105,9 @@ void	ft_draw(t_mlx mlx_data, t_point **tab_point, t_img img)
 		while (x < mlx_data.map_size_x)
 		{
 			if (x < mlx_data.map_size_x - 1)
-				ft_put_line(mlx_data, img, tab_point[y][x].proj, tab_point[y][x + 1].proj);
+				ft_put_line(mlx_data, tab_point[y][x].proj, tab_point[y][x + 1].proj);
 			if (y < mlx_data.map_size_y - 1)
-				ft_put_line(mlx_data, img, tab_point[y][x].proj, tab_point[y + 1][x].proj);
+				ft_put_line(mlx_data, tab_point[y][x].proj, tab_point[y + 1][x].proj);
 			x++;
 		}
 		y++;
@@ -122,18 +116,8 @@ void	ft_draw(t_mlx mlx_data, t_point **tab_point, t_img img)
 
 void	ft_create_image(t_mlx *mlx_data, t_point **tab_point)
 {
-	t_img	img;
-
-	
-	///creation de l'img
-	img.img_ptr = mlx_new_image(mlx_data->addr_init, mlx_data->windows_size_x, mlx_data->windows_size_y);
-	img.img_data = mlx_get_data_addr(img.img_ptr, &img.bpp, &img.size_line, &img.endian);
-
-
-	mlx_data->img = img;
-
-	ft_draw(*mlx_data, tab_point, img);
-
-	// application de limage
-	mlx_put_image_to_window(mlx_data->addr_init, mlx_data->addr_windows, img.img_ptr, 0, 0);
+	mlx_data->img.img_ptr = mlx_new_image(mlx_data->addr_init, mlx_data->windows_size_x, mlx_data->windows_size_y);
+	mlx_data->img.img_data = mlx_get_data_addr(mlx_data->img.img_ptr, &mlx_data->img.bpp, &mlx_data->img.size_line, &mlx_data->img.endian);
+	ft_draw(*mlx_data, tab_point);
+	mlx_put_image_to_window(mlx_data->addr_init, mlx_data->addr_windows, mlx_data->img.img_ptr, 0, 0);
 }

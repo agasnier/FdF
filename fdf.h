@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/11 16:57:19 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/11 19:13:44 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,18 +110,22 @@ typedef struct s_mlx
 
 
 
-//ft_initialization.c
+//ft_projection.c
 void	ft_proj(t_point point, t_point_proj *point_proj, t_view view, t_mlx mlx_data);
 void	ft_apply_proj(t_point **tab_point, t_mlx mlx_data);
 void	ft_set_view(t_mlx *mlx_data, double zoom, double offset_x, double offset_y, double z_scale);
-int		ft_take_color(char *line, int *i);
-void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line);
+
+//ft_initialization.c
+//static void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line);
 int		ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv);
 t_point	**ft_create_tab(t_mlx mlx_data);
 
 //ft_helper.c
-int	ft_size_map(t_mlx *mlx_data, char *argv);
-int	ft_atoi(char *line, int *j);
+//static int	ft_convert_color(char *color)
+int		ft_take_color(char *line, int *i);
+//static void	ft_size_map_gnl(int fd, t_mlx *mlx_data);
+int		ft_size_map(char *argv, t_mlx *mlx_data);
+int		ft_atoi(char *line, int *j);
 
 
 // ft_control.c
@@ -129,21 +133,10 @@ int	ft_input_key(int keycode, t_mlx *mlx);
 int	ft_input_mouse(int keycode, int x, int y, t_mlx *mlx);
 
 //ft_draw.c
-void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point_proj point);
-void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj point_b);
-void	ft_draw(t_mlx mlx_data, t_point **tab_point, t_img img);
+//void	ft_put_pixel(t_mlx mlx_data, t_point_proj point);
+//void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point_b);
+//void	ft_draw(t_mlx mlx_data, t_point **tab_point);
 void	ft_create_image(t_mlx *mlx_data, t_point **tab_point);
-
-//ft_hex_to_int.c
-int	ft_str_len(char *str);
-int	ft_verif_base(char *base, int len);
-char	*ft_atoi_2(char *str, int *sign);
-int	ft_in_base(char *str, char *base);
-int	ft_atoi_base(char *str, char *base);
-
-
-
-
 
 
 

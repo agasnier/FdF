@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/09 16:31:53 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/11 18:39:47 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	ft_render(t_mlx *mlx_data, t_point **tab_point)
 
 
 	//boucle event
+	
 	mlx_hook(mlx_data->addr_windows, KEY_PRESS, KEY_PRESS_MASK, &ft_input_key, mlx_data);
 	mlx_hook(mlx_data->addr_windows, MOUSE, MOUSE_MASK, &ft_input_mouse, mlx_data);
 	mlx_loop(mlx_data->addr_init);
@@ -54,7 +55,7 @@ int	main(int argc, char **argv)
 	if (argc <= 1)
 		return (0);
 
-	if (ft_size_map(&mlx_data, argv[1]))
+	if (ft_size_map(argv[1], &mlx_data))
 	{
 		write(2, "error\n", 6);
 		return (1);
