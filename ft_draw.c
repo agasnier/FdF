@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/11 17:01:14 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/11 17:25:45 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,34 +30,44 @@ void	ft_put_pixel(t_mlx mlx_data, t_img img, t_point_proj point)
 
 void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj point_b)
 {
-	double		dx;
-	double		dy;
-	double		err;
-	double		err2;
-	double		sx;
-	double		sy;
+	int		ax;
+	int		ay;
+	int		bx;
+	int		by;
+	
+	int		dx;
+	int		dy;
+	int		err;
+	int		err2;
+	int		sx;
+	int		sy;
+
+	ax = (int)point_a.x;
+	ay = (int)point_a.y;
+	bx = (int)point_b.x;
+	by = (int)point_b.y;
 
 	point_a.color = point_b.color;
-	if (point_a.x > point_b.x)
+	if (ax > bx)
 	{
-		dx = point_a.x - point_b.x;
+		dx = ax - bx;
 		sx = -1;
 	}
 	else
 	{
-		dx = point_b.x - point_a.x;
+		dx = bx - ax;
 		sx = 1;
 	}
 		
 		
-	if (point_a.y > point_b.y)
+	if (ay > by)
 	{
-		dy = point_a.y - point_b.y;
+		dy = ay - by;
 		sy = -1;
 	}
 	else
 	{
-		dy = point_b.y - point_a.y;
+		dy = by - ay;
 		sy = 1;
 	}
 
@@ -68,8 +78,8 @@ void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj p
 
 	while (1)
 	{
-		ft_put_pixel(mlx_data, img, point_a);
-		if (point_a.x >= point_b.x && point_a.y >= point_b.y)
+		ft_put_pixel(mlx_data, img, (t_point_proj){ax, ay, 0, point_b.color});
+		if (ax == bx && ay == by)
 			break ;
 
 		err2 = err;
@@ -77,13 +87,13 @@ void	ft_put_line(t_mlx mlx_data, t_img img, t_point_proj point_a, t_point_proj p
 		if (err2 > -dx)
 		{
 			err -= dy;
-			point_a.x += sx;
+			ax += sx;
 		}
 		
 		if (err2 < dy)
 		{
 			err += dx;
-			point_a.y += sy;
+			ay += sy;
 		}
 
 		

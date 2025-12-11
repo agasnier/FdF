@@ -6,27 +6,20 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:10:29 by algasnie          #+#    #+#             */
-/*   Updated: 2025/11/28 15:13:05 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/11 17:32:52 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_size_map(t_mlx *mlx_data, char *argv)
+static void	ft_size_map_gnl(int fd, t_mlx *mlx_data)
 {
-	int		fd;
 	char	*line;
 	int		i;
 
-	fd = open(argv, O_RDONLY);
-	if (fd < 0)
-		return (1);
-
 	i = 0;
-
 	mlx_data->map_size_x = 0;
 	mlx_data->map_size_y = 0;
-
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -47,6 +40,16 @@ int	ft_size_map(t_mlx *mlx_data, char *argv)
 		}
 		free(line);
 	}
+}
+
+int	ft_size_map(t_mlx *mlx_data, char *argv)
+{
+	int		fd;
+
+	fd = open(argv, O_RDONLY);
+	if (fd < 0)
+		return (1);
+	ft_size_map_gnl(fd, mlx_data);
 	close(fd);
 	return (0);
 }
