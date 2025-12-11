@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/11 16:02:30 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/11 16:42:37 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	ft_set_view(t_mlx *mlx_data, double zoom, double offset_x, double offset_y,
 	view.z_scale = z_scale;
 
 
-	view.angle_x = 0;
-	view.angle_y = 35 * 3.14159265358979323846 / 180;
-	view.angle_z = 45 * 3.14159265358979323846 / 180;
+	view.angle_x = 0.615472907;
+	view.angle_y = 0;
+	view.angle_z = 0.785398163;
 
 	mlx_data->view = view;	
 }
