@@ -6,17 +6,19 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 16:55:49 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 17:29:53 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_free_all(t_mlx *mlx_data)
+void	ft_free_all(t_mlx *mlx_data, int error)
 {
 	int i;
 
 	i = 0;
+	if (error)
+		write(2, "error\n", 6);
 	while (mlx_data && mlx_data->tab_point[i])
 	{
 		free(mlx_data->tab_point[i]);
