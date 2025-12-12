@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 14:50:40 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 14:52:56 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ static void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point
 	int		err2;
 	int		sx;
 	int		sy;
-
-	int 	max;
-	int		step;
 
 	ax = (int)point_a.x;
 	ay = (int)point_a.y;
@@ -68,17 +65,10 @@ static void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point
 	}
 
 	if (dx > dy)
-	{
 		err = dx / 2;
-		max = dx;
-	}
 	else
-	{
 		err = -dy / 2;
-		max = dy;
-	}
 
-	step = 0;
 	while (1)
 	{
 		ft_put_pixel(mlx_data, (t_point_proj){ax, ay, 0, point_b.color});
@@ -98,7 +88,6 @@ static void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point
 			err += dx;
 			ay += sy;
 		}
-		step++;
 		
 	}
 }
