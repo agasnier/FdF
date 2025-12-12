@@ -6,11 +6,37 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 13:54:46 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:48:50 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	ft_free_all(t_mlx *mlx_data)
+{
+	int i;
+
+	i = 0;
+	while (mlx_data && mlx_data->tab_point[i])
+	{
+		free(mlx_data->tab_point[i]);
+		i++;
+	}
+	if (mlx_data->tab_point != NULL)
+	{
+		free(mlx_data->tab_point);
+		mlx_data->tab_point = NULL;
+	}
+	if (mlx_data->img.img_ptr)
+		mlx_destroy_image(mlx_data->addr_init, mlx_data->img.img_ptr);
+	if (mlx_data->addr_windows)
+		mlx_destroy_window(mlx_data->addr_init, mlx_data->addr_windows);
+	if (mlx_data->addr_init)
+	{
+		mlx_destroy_display(mlx_data->addr_init);	
+		free(mlx_data->addr_init);
+	}
+}
 
 static void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 {

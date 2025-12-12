@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 14:52:56 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 15:48:09 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ static void	ft_draw(t_mlx mlx_data, t_point **tab_point)
 
 void	ft_create_image(t_mlx *mlx_data, t_point **tab_point)
 {
+	ft_apply_proj(tab_point, *mlx_data);
 	if (mlx_data->img.img_ptr != NULL)
 		mlx_destroy_image(mlx_data->addr_init, mlx_data->img.img_ptr);
 	mlx_data->img.img_ptr = mlx_new_image(mlx_data->addr_init, mlx_data->windows_size_x, mlx_data->windows_size_y);

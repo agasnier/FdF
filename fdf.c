@@ -6,33 +6,28 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 14:15:26 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:45:29 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+static int	ft_close_windows(t_mlx *mlx_data)
+{
+	ft_free_all(mlx_data);	
+	exit(0);
+	return (0);
+}
 
 static void	ft_render(t_mlx *mlx_data, t_point **tab_point)
 {
-
-	////////setting view && apply
 	ft_set_view_iso(mlx_data);
-	ft_apply_proj(tab_point, *mlx_data);
-
-	//// draw
 	mlx_data->img.img_ptr = NULL;
 	ft_create_image(mlx_data, tab_point);
-
-
-	//boucle event
-
-	
-		
+	mlx_hook(mlx_data->addr_windows, 17, 0, &ft_close_windows, mlx_data);
 	mlx_hook(mlx_data->addr_windows, KEY_PRESS, KEY_PRESS_MASK, &ft_input_key, mlx_data);
 	mlx_hook(mlx_data->addr_windows, MOUSE, MOUSE_MASK, &ft_input_mouse, mlx_data);
 	mlx_loop(mlx_data->addr_init);
-
 }
 
 static int	ft_new_windows(t_mlx *mlx_data)
@@ -52,7 +47,6 @@ static int	ft_new_windows(t_mlx *mlx_data)
 int	main(int argc, char **argv)
 {	
 	t_mlx	mlx_data;
-	t_point **tab_point;
 
 	if (argc <= 1)
 		return (0);
@@ -65,11 +59,10 @@ int	main(int argc, char **argv)
 
 	////////////////////////////////creatin tab map
 
-	tab_point = ft_create_tab(mlx_data);
-	if (tab_point == NULL)
+	mlx_data.tab_point = ft_create_tab(mlx_data);
+	if (mlx_data.tab_point == NULL)
 		return (1);
-	ft_init_tab(tab_point, mlx_data, argv[1]);
-	mlx_data.tab_point = tab_point;
+	ft_init_tab(mlx_data.tab_point, mlx_data, argv[1]);
 	///////////////////////////////////creation mlx	
 
 	mlx_data.addr_init = mlx_init();
@@ -83,7 +76,7 @@ int	main(int argc, char **argv)
 		return (1); //////error
 	}
 
-	ft_render(&mlx_data, tab_point);
+	ft_render(&mlx_data, mlx_data.tab_point);
 
 
 	return (0);

@@ -6,14 +6,14 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 14:15:37 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:22:44 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "ressources/minilibx_macos/mlx.h"
+# include "ressources/minilibx-linux/mlx.h"
 # include "get_next_line/get_next_line.h"
 
 # include <fcntl.h>
@@ -24,10 +24,6 @@
 
 # define KEY_PRESS	2
 # define KEY_PRESS_MASK (1L<<0)
-
-# define KEY_RELEASE 3
-# define KEY_RELEASE_MASK (1L<<1)
-
 # define MOUSE 4
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
@@ -116,6 +112,7 @@ void	ft_apply_proj(t_point **tab_point, t_mlx mlx_data);
 void	ft_set_view_iso(t_mlx *mlx_data);
 
 //ft_initialization.c
+void	ft_free_all(t_mlx *mlx_data);
 //static void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line);
 int		ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv);
 t_point	**ft_create_tab(t_mlx mlx_data);

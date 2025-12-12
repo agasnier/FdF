@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:08:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 15:04:48 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 15:48:28 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,6 @@ int	ft_input_key(int keycode, t_mlx *mlx_data)
 
 	else if (keycode == KEY_PLUS || keycode == KEY_MINUS || keycode == CTRL)
 		ft_manip_view(keycode, mlx_data);
-		
-
-
-	
-
-	ft_apply_proj(mlx_data->tab_point, *mlx_data);
 	ft_create_image(mlx_data, mlx_data->tab_point);
 	return (0);
 }
@@ -103,7 +97,6 @@ int	ft_input_mouse(int keycode, int x, int y, t_mlx *mlx_data)
 	else if (keycode == SCROLL_DOWN)
 		if (mlx_data->view.zoom >= incr)
 			mlx_data->view.zoom -= incr;
-	ft_apply_proj(mlx_data->tab_point, *mlx_data);
 	ft_create_image(mlx_data, mlx_data->tab_point);
 
 	return (0);
