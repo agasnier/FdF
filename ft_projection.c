@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 17:48:47 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/11 18:58:01 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 14:46:00 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ void	ft_proj(t_point point, t_point_proj *point_proj,
 	xt = (double)(point.x - mlx_data.map_size_x / 2);
 	yt = (double)(point.y - mlx_data.map_size_y / 2);
 	zt = (double)point.z * view.z_scale;
+	tmp_x = xt;
+	tmp_y = yt;
+	xt = tmp_x * cos(view.angle_z) - tmp_y * sin(view.angle_z);
+	yt = tmp_x * sin(view.angle_z) + tmp_y * cos(view.angle_z);
 	tmp_y = yt;
 	yt = tmp_y * cos(view.angle_x) - zt * sin(view.angle_x);
 	zt = tmp_y * sin(view.angle_x) + zt * cos(view.angle_x);
 	tmp_x = xt;
 	xt = tmp_x * cos(view.angle_y) + zt * sin(view.angle_y);
 	zt = -tmp_x * sin(view.angle_y) + zt * cos(view.angle_y);
-	tmp_x = xt;
-	tmp_y = yt;
-	xt = tmp_x * cos(view.angle_z) - tmp_y * sin(view.angle_z);
-	yt = tmp_x * sin(view.angle_z) + tmp_y * cos(view.angle_z);
 	point_proj->x = xt * view.zoom + view.offset_x;
 	point_proj->y = yt * view.zoom + view.offset_y;
 	point_proj->z = zt * view.zoom;
@@ -59,19 +59,13 @@ void	ft_apply_proj(t_point **tab_point, t_mlx mlx_data)
 	}
 }
 
-void	ft_set_view(t_mlx *mlx_data, double zoom, double offset_x, double offset_y, double z_scale)
+void	ft_set_view_iso(t_mlx *mlx_data)
 {
-	t_view view;
-
-	view.zoom = zoom;
-	view.offset_x = offset_x;
-	view.offset_y = offset_y;
-	view.z_scale = z_scale;
-
-
-	view.angle_x = 0.615472907;
-	view.angle_y = 0;
-	view.angle_z = 0.785398163;
-
-	mlx_data->view = view;	
+	mlx_data->view.zoom = ((double)mlx_data->windows_size_x * 0.5) / mlx_data->map_size_x;
+	mlx_data->view.offset_x = mlx_data->windows_size_x/2;
+	mlx_data->view.offset_y = mlx_data->windows_size_y/2;
+	mlx_data->view.z_scale = 1;
+	mlx_data->view.angle_x = 0.9550;
+	mlx_data->view.angle_y = 0;
+	mlx_data->view.angle_z = 0.7854;
 }

@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:08:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/11 16:38:00 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 14:17:29 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int	ft_input_key(int keycode, t_mlx *mlx_data)
 
 	
 	else if (keycode == KEY_RIGHT)
-		mlx_data->view.angle_x += incr;
+		mlx_data->view.angle_y += incr;
 	else if (keycode == KEY_LEFT)
-		mlx_data->view.angle_x -= incr;
+		mlx_data->view.angle_y -= incr;
 
 	
 	else if (keycode == KEY_UP)
-		mlx_data->view.angle_y += incr;
+		mlx_data->view.angle_x += incr;
 	else if (keycode == KEY_DOWN)
-		mlx_data->view.angle_y -= incr;
+		mlx_data->view.angle_x -= incr;
 	
 		
 	else if (keycode == KEY_PLUS)
@@ -55,6 +55,8 @@ int	ft_input_key(int keycode, t_mlx *mlx_data)
 	else if (keycode == KEY_D)
 		mlx_data->view.offset_x += incr;
 
+	else if (keycode == CTRL)
+		ft_set_view_iso(mlx_data);
 
 	
 	mlx_destroy_image(mlx_data->addr_init, mlx_data->img.img_ptr);

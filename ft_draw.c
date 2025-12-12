@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/11 20:03:40 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 14:10:15 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,6 @@ static void	ft_put_pixel(t_mlx mlx_data, t_point_proj point)
 	*(unsigned int*)pixel = (unsigned int)point.color;
 }
 
-// int	ft_get_gradient(t_point_proj point_a, t_point_proj point_b, int ax, int ay)
-// {
-// 	int	pourcent_x;
-// 	int	pourcent_y;
-// 	int	pourcent;
-// 	int	r;
-// 	int	g;
-// 	int	b;
-
-// 	pourcent_x = (ax - (int)point_a.x) / ((int)point_b.x - (int)point_a.x);
-// 	pourcent_y = (ay - (int)point_a.y) / ((int)point_b.y - (int)point_a.y);
-// 	pourcent = (pourcent_x + pourcent_y) / 2;
-
-// 	r = 
-	
-
-
-
-
-	
-// }
-
 static void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point_b)
 {
 	int		ax;
@@ -58,12 +36,14 @@ static void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point
 	int		sx;
 	int		sy;
 
+	int 	max;
+	int		step;
+
 	ax = (int)point_a.x;
 	ay = (int)point_a.y;
 	bx = (int)point_b.x;
 	by = (int)point_b.y;
 
-	point_a.color = point_b.color;
 	if (ax > bx)
 	{
 		dx = ax - bx;
@@ -88,10 +68,17 @@ static void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point
 	}
 
 	if (dx > dy)
+	{
 		err = dx / 2;
-	else	
+		max = dx;
+	}
+	else
+	{
 		err = -dy / 2;
+		max = dy;
+	}
 
+	step = 0;
 	while (1)
 	{
 		ft_put_pixel(mlx_data, (t_point_proj){ax, ay, 0, point_b.color});
@@ -111,7 +98,7 @@ static void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point
 			err += dx;
 			ay += sy;
 		}
-
+		step++;
 		
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/11 18:33:25 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 13:54:46 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 			tab_point[x].color = ft_take_color(line, &i);
 		}
 		else
-			tab_point[x].color = 0xFFFFFF;
+			tab_point[x].color = 0xFF0000;
 		x++;
 	}
 }

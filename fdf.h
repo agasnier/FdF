@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/11 19:13:44 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 14:15:37 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ typedef struct s_mlx
 //ft_projection.c
 void	ft_proj(t_point point, t_point_proj *point_proj, t_view view, t_mlx mlx_data);
 void	ft_apply_proj(t_point **tab_point, t_mlx mlx_data);
-void	ft_set_view(t_mlx *mlx_data, double zoom, double offset_x, double offset_y, double z_scale);
+void	ft_set_view_iso(t_mlx *mlx_data);
 
 //ft_initialization.c
 //static void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line);
