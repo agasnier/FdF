@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 16:48:50 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:55:49 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ t_point	**ft_create_tab(t_mlx mlx_data)
 			return (NULL); /////////////////////////////////// + free all 
 		i++;
 	}
+	tab_point[i] = NULL;
 	return (tab_point);
 }

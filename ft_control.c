@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:08:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 15:48:28 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:51:53 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_input_key(int keycode, t_mlx *mlx_data)
 {
 	if (keycode == KEY_ESC)
 	{
-		mlx_destroy_window(mlx_data->addr_init, mlx_data->addr_windows); /// + free malloc
+		ft_free_all(mlx_data);
 		exit(0);
 	}
 

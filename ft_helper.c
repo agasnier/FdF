@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:10:29 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 13:27:36 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:53:43 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	ft_size_map_gnl(int fd, t_mlx *mlx_data)
 		if (line == NULL)
 			break ;
 		mlx_data->map_size_y++;
-		while (line[i] && mlx_data->map_size_y == 1)
+		while (mlx_data->map_size_y == 1 && line[i])
 		{
 			while (line[i] == ' ')
 				i++;
