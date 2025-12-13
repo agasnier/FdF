@@ -6,38 +6,44 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/13 13:48:52 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/13 18:42:34 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+static void	ft_free_all_helper(void)
+{
+	write(2, "error\n", 6);
+	exit(1);
+}
+
 void	ft_free_all(t_mlx *mlx_data, int error)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (error)
-		write(2, "error\n", 6);
-	while (mlx_data && mlx_data->tab_point[i])
+	while (mlx_data->tab_point && mlx_data->tab_point[i])
 	{
 		free(mlx_data->tab_point[i]);
 		i++;
 	}
-	if (mlx_data->tab_point != NULL)
+	if (mlx_data && mlx_data->tab_point != NULL)
 	{
 		free(mlx_data->tab_point);
 		mlx_data->tab_point = NULL;
 	}
-	if (mlx_data->img.img_ptr)
+	if (mlx_data && mlx_data->img.img_ptr)
 		mlx_destroy_image(mlx_data->addr_init, mlx_data->img.img_ptr);
-	if (mlx_data->addr_windows)
+	if (mlx_data && mlx_data->addr_windows)
 		mlx_destroy_window(mlx_data->addr_init, mlx_data->addr_windows);
-	if (mlx_data->addr_init)
+	if (mlx_data && mlx_data->addr_init)
 	{
-		mlx_destroy_display(mlx_data->addr_init);	
+		mlx_destroy_display(mlx_data->addr_init);
 		free(mlx_data->addr_init);
 	}
+	if (error)
+		ft_free_all_helper();
 }
 
 static void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
@@ -97,12 +103,12 @@ t_point	**ft_create_tab(t_mlx mlx_data)
 		tab_point[i] = malloc(sizeof(t_point) * (mlx_data.map_size_x + 1));
 		if (!tab_point[i])
 		{
-            while (i > 0)
-            {
-                i--;
-                free(tab_point[i]);
-            }
-            free(tab_point);
+			while (i > 0)
+			{
+				i--;
+				free(tab_point[i]);
+			}
+			free(tab_point);
 			write(2, "error\n", 6);
 			return (NULL);
 		}

@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:10:29 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 16:53:43 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/13 17:48:27 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	ft_convert_color(char *color)
 {
-	char	base[] = "0123456789ABCDEFabcdef";
 	int		i;
 	int		j;
 	int		color_dec;
@@ -25,9 +24,9 @@ static int	ft_convert_color(char *color)
 	{
 		color_dec *= 16;
 		j = 0;
-		while (base[j] != '\0')
+		while ("0123456789ABCDEFabcdef"[j] != '\0')
 		{
-			if (color[i] == base[j])
+			if (color[i] == "0123456789ABCDEFabcdef"[j])
 			{
 				if (j > 16)
 					j -= 6;

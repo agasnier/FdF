@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/13 14:20:10 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/13 18:20:54 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,17 @@
 # include <stdlib.h>
 # include <math.h>
 
+//manda
 # define ISO_ANGLE_X 0.9550
 # define ISO_ANGLE_Y 0.7854
+
+//bonus
+
+//angle
 # define PARA_ANGLE_X 0
 # define PARA_ANGLE_Y 0
 
+//keyboard_events
 # define KEY_PRESS	2
 # define KEY_PRESS_MASK (1L<<0)
 # define MOUSE 4
@@ -32,29 +38,25 @@
 # define SCROLL_DOWN 5
 # define MOUSE_MASK (1L<<2)
 
-//linux
-# define KEY_ESC	0xFF1B //close
-# define KEY_UP		0xFF52 //x
-# define KEY_DOWN	0xFF54 //x
-# define KEY_LEFT	0xFF51 //y
-# define KEY_RIGHT	0xFF53 //y
-# define KEY_PLUS	0xFFAB //scale_z
-# define KEY_MINUS	0xFFAD //scale_z
+//keycode
+# define KEY_ESC	0xFF1B
+# define KEY_UP		0xFF52
+# define KEY_DOWN	0xFF54
+# define KEY_LEFT	0xFF51
+# define KEY_RIGHT	0xFF53
+# define KEY_PLUS	0xFFAB
+# define KEY_MINUS	0xFFAD
 # define CTRL		0xFFE3
 # define SHIFT		0xFFE1
+# define KEY_H      0x0068
 # define KEY_W		0x0077
 # define KEY_A      0x0061 
 # define KEY_S      0x0073 
 # define KEY_D      0x0064
 
-// MAC
-// # define KEY_ESC    53
-// # define KEY_LEFT   123
-// # define KEY_RIGHT  124
-// # define KEY_DOWN   125
-// # define KEY_UP     126
-// # define KEY_PLUS   69
-// # define KEY_MINUS  78
+//heatmap
+# define HEATMAP_MIN 0xFF0000
+# define HEATMAP_MAX 0x0000FF
 
 typedef struct s_line
 {
@@ -82,8 +84,7 @@ typedef struct s_point_proj
 	double	y;
 	double	z;
 	int	color;
-	int color_bonus;
-	int	heat;
+	int color_heat;
 } t_point_proj;
 
 typedef struct s_point
@@ -93,6 +94,7 @@ typedef struct s_point
 	int				z;
 	t_point_proj	proj;
 	int				color;
+	int color_heat;
 } t_point;
 
 typedef struct s_img
@@ -114,12 +116,13 @@ typedef struct s_mlx
 	int		windows_size_y;
 	int		map_size_x;
 	int		map_size_y;
+	int		z_min;
+	int		z_max;
+	int		heat;
 	t_img	img;
 	t_view	view;
 	t_point	**tab_point;
 } t_mlx;
-
-
 
 //ft_projection.c
 void	ft_proj(t_point point, t_point_proj *point_proj, t_view view, t_mlx mlx_data);
@@ -129,17 +132,14 @@ void	ft_set_view_para(t_mlx *mlx_data);
 
 //ft_initialization.c
 void	ft_free_all(t_mlx *mlx_data, int error);
-//static void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line);
+void	ft_create_heat(t_mlx *mlx_data, t_point **tab_point);
 int		ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv);
 t_point	**ft_create_tab(t_mlx mlx_data);
 
 //ft_helper.c
-//static int	ft_convert_color(char *color)
-int		ft_take_color(char *line, int *i);
-//static void	ft_size_map_gnl(int fd, t_mlx *mlx_data);
-int		ft_size_map(char *argv, t_mlx *mlx_data);
-int		ft_atoi(char *line, int *j);
-
+int	ft_take_color(char *line, int *i);
+int	ft_size_map(char *argv, t_mlx *mlx_data);
+int	ft_atoi(char *line, int *j);
 
 // ft_control.c
 int	ft_input_key(int keycode, t_mlx *mlx);
@@ -149,7 +149,7 @@ int	ft_input_mouse(int keycode, int x, int y, t_mlx *mlx);
 void	ft_put_pixel(t_mlx mlx_data, t_point point);
 void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point_b);
 void	ft_draw(t_mlx mlx_data, t_point **tab_point);
-void	ft_create_image(t_mlx *mlx_data, t_point **tab_point);
+void	ft_create_image(t_mlx *mlx_data);
 
 //ft_put_line_helper.c
 void	ft_put_line_draw(t_mlx mlx_data, t_line line, t_point bress_a, t_point bress_b);
