@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 17:29:53 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/13 13:48:52 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ static void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 		tab_point[x].x = x;
 		tab_point[x].z = ft_atoi(line, &i);
 		if (line[i] == ',')
-		{
 			tab_point[x].color = ft_take_color(line, &i);
-		}
 		else
 			tab_point[x].color = 0xFF0000;
 		x++;
@@ -98,7 +96,16 @@ t_point	**ft_create_tab(t_mlx mlx_data)
 	{
 		tab_point[i] = malloc(sizeof(t_point) * (mlx_data.map_size_x + 1));
 		if (!tab_point[i])
-			return (NULL); /////////////////////////////////// + free all 
+		{
+            while (i > 0)
+            {
+                i--;
+                free(tab_point[i]);
+            }
+            free(tab_point);
+			write(2, "error\n", 6);
+			return (NULL);
+		}
 		i++;
 	}
 	tab_point[i] = NULL;

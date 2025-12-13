@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 17:30:03 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/13 14:20:10 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@
 # include <stdlib.h>
 # include <math.h>
 
-
+# define ISO_ANGLE_X 0.9550
+# define ISO_ANGLE_Y 0.7854
+# define PARA_ANGLE_X 0
+# define PARA_ANGLE_Y 0
 
 # define KEY_PRESS	2
 # define KEY_PRESS_MASK (1L<<0)
@@ -38,6 +41,7 @@
 # define KEY_PLUS	0xFFAB //scale_z
 # define KEY_MINUS	0xFFAD //scale_z
 # define CTRL		0xFFE3
+# define SHIFT		0xFFE1
 # define KEY_W		0x0077
 # define KEY_A      0x0061 
 # define KEY_S      0x0073 
@@ -51,6 +55,15 @@
 // # define KEY_UP     126
 // # define KEY_PLUS   69
 // # define KEY_MINUS  78
+
+typedef struct s_line
+{
+	int	dx;
+	int	dy;
+	int	err;
+	int	sx;
+	int	sy;
+} t_line;
 
 typedef struct s_view
 {
@@ -69,6 +82,8 @@ typedef struct s_point_proj
 	double	y;
 	double	z;
 	int	color;
+	int color_bonus;
+	int	heat;
 } t_point_proj;
 
 typedef struct s_point
@@ -110,6 +125,7 @@ typedef struct s_mlx
 void	ft_proj(t_point point, t_point_proj *point_proj, t_view view, t_mlx mlx_data);
 void	ft_apply_proj(t_point **tab_point, t_mlx mlx_data);
 void	ft_set_view_iso(t_mlx *mlx_data);
+void	ft_set_view_para(t_mlx *mlx_data);
 
 //ft_initialization.c
 void	ft_free_all(t_mlx *mlx_data, int error);
@@ -130,14 +146,16 @@ int	ft_input_key(int keycode, t_mlx *mlx);
 int	ft_input_mouse(int keycode, int x, int y, t_mlx *mlx);
 
 //ft_draw.c
-//void	ft_put_pixel(t_mlx mlx_data, t_point_proj point);
-//void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point_b);
-//void	ft_draw(t_mlx mlx_data, t_point **tab_point);
+void	ft_put_pixel(t_mlx mlx_data, t_point point);
+void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point_b);
+void	ft_draw(t_mlx mlx_data, t_point **tab_point);
 void	ft_create_image(t_mlx *mlx_data, t_point **tab_point);
 
-
-
-
-
+//ft_put_line_helper.c
+void	ft_put_line_draw(t_mlx mlx_data, t_line line, t_point bress_a, t_point bress_b);
+void	ft_put_line_err(int *err, int dx, int dy);
+void	ft_put_line_direc_y(t_point bress_a, t_point bress_b, int *dy, int *sy);
+void	ft_put_line_direc_x(t_point bress_a, t_point bress_b, int *dx, int *sx);
+void	ft_line_put_to_int(t_point *bress_a, t_point *bress_b, t_point_proj point_a, t_point_proj point_b);
 
 #endif

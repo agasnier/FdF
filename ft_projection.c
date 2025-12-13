@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 17:48:47 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 14:46:00 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/13 12:25:40 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_proj(t_point point, t_point_proj *point_proj,
 	point_proj->y = yt * view.zoom + view.offset_y;
 	point_proj->z = zt * view.zoom;
 	point_proj->color = point.color;
+	point_proj->color_bonus = 0xFFFF00;
 }
 
 void	ft_apply_proj(t_point **tab_point, t_mlx mlx_data)
@@ -61,11 +62,22 @@ void	ft_apply_proj(t_point **tab_point, t_mlx mlx_data)
 
 void	ft_set_view_iso(t_mlx *mlx_data)
 {
-	mlx_data->view.zoom = ((double)mlx_data->windows_size_x * 0.5) / mlx_data->map_size_x;
+	mlx_data->view.zoom = ((double)mlx_data->windows_size_x * 0.25) / mlx_data->map_size_x;
 	mlx_data->view.offset_x = mlx_data->windows_size_x/2;
 	mlx_data->view.offset_y = mlx_data->windows_size_y/2;
 	mlx_data->view.z_scale = 1;
-	mlx_data->view.angle_x = 0.9550;
+	mlx_data->view.angle_x = ISO_ANGLE_X;
 	mlx_data->view.angle_y = 0;
-	mlx_data->view.angle_z = 0.7854;
+	mlx_data->view.angle_z = ISO_ANGLE_Y;
+}
+
+void	ft_set_view_para(t_mlx *mlx_data)
+{
+	mlx_data->view.zoom = ((double)mlx_data->windows_size_x * 0.25) / mlx_data->map_size_x;
+	mlx_data->view.offset_x = mlx_data->windows_size_x/2;
+	mlx_data->view.offset_y = mlx_data->windows_size_y/2;
+	mlx_data->view.z_scale = 1;
+	mlx_data->view.angle_x = PARA_ANGLE_X;
+	mlx_data->view.angle_y = 0;
+	mlx_data->view.angle_z = PARA_ANGLE_Y;
 }

@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 17:32:40 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/13 12:05:05 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	ft_new_windows(t_mlx *mlx_data)
 	mlx_data->addr_windows = mlx_new_window(mlx_data->addr_init, mlx_data->windows_size_x, mlx_data->windows_size_y, mlx_data->windows_title);
 	if (!mlx_data->addr_windows)
 	{
-		ft_free_all(&mlx_data, 1);
+		ft_free_all(mlx_data, 1);
 		return (1);
 	}
 	return (0);
@@ -57,10 +57,7 @@ int	main(int argc, char **argv)
 	}
 	mlx_data.tab_point = ft_create_tab(mlx_data);
 	if (mlx_data.tab_point == NULL)
-	{
-		ft_free_all(&mlx_data, 1);
 		return (1);
-	}
 	ft_init_tab(mlx_data.tab_point, mlx_data, argv[1]);
 	mlx_data.addr_init = mlx_init();
 	if (!mlx_data.addr_init)

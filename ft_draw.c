@@ -6,93 +6,38 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/12 15:48:09 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/13 14:21:23 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	ft_put_pixel(t_mlx mlx_data, t_point_proj point)
+void	ft_put_pixel(t_mlx mlx_data, t_point point)
 {
 	void	*pixel;
 
-	if (point.x < 0 || (int)point.x >= mlx_data.windows_size_x || point.y < 0 || (int)point.y >= mlx_data.windows_size_y)
+	if (point.x < 0 || point.x >= mlx_data.windows_size_x || point.y < 0 || point.y >= mlx_data.windows_size_y)
 		return ;
-	pixel = mlx_data.img.img_data + ((int)point.y * mlx_data.img.size_line) + ((int)point.x * (mlx_data.img.bpp /8));	
+	pixel = mlx_data.img.img_data + (point.y * mlx_data.img.size_line) + (point.x * (mlx_data.img.bpp /8));	
 	*(unsigned int*)pixel = (unsigned int)point.color;
 }
 
-static void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point_b)
+
+void	ft_put_line(t_mlx mlx_data, t_point_proj point_a, t_point_proj point_b)
 {
-	int		ax;
-	int		ay;
-	int		bx;
-	int		by;
+	t_line	line;
+	t_point	bress_a;
+	t_point bress_b;
 	
-	int		dx;
-	int		dy;
-	int		err;
-	int		err2;
-	int		sx;
-	int		sy;
+	ft_line_put_to_int(&bress_a, &bress_b, point_a, point_b);
+	ft_put_line_direc_x(bress_a, bress_b, &line.dx, &line.sx);
+	ft_put_line_direc_y(bress_a, bress_b, &line.dy, &line.sy);
+	ft_put_line_err(&line.err, line.dx, line.dy);
+	ft_put_line_draw(mlx_data, line, bress_a, bress_b);
 
-	ax = (int)point_a.x;
-	ay = (int)point_a.y;
-	bx = (int)point_b.x;
-	by = (int)point_b.y;
-
-	if (ax > bx)
-	{
-		dx = ax - bx;
-		sx = -1;
-	}
-	else
-	{
-		dx = bx - ax;
-		sx = 1;
-	}
-		
-		
-	if (ay > by)
-	{
-		dy = ay - by;
-		sy = -1;
-	}
-	else
-	{
-		dy = by - ay;
-		sy = 1;
-	}
-
-	if (dx > dy)
-		err = dx / 2;
-	else
-		err = -dy / 2;
-
-	while (1)
-	{
-		ft_put_pixel(mlx_data, (t_point_proj){ax, ay, 0, point_b.color});
-		if (ax == bx && ay == by)
-			break ;
-
-		err2 = err;
-		
-		if (err2 > -dx)
-		{
-			err -= dy;
-			ax += sx;
-		}
-		
-		if (err2 < dy)
-		{
-			err += dx;
-			ay += sy;
-		}
-		
-	}
 }
 
-static void	ft_draw(t_mlx mlx_data, t_point **tab_point)
+void	ft_draw(t_mlx mlx_data, t_point **tab_point)
 {
 	int	y = 0;
 	int	x;
