@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/13 18:20:54 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/13 18:58:33 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@
 # define KEY_D      0x0064
 
 //heatmap
-# define HEATMAP_MIN 0xFF0000
-# define HEATMAP_MAX 0x0000FF
+# define HEATMAP_MIN 0x111111
+# define HEATMAP_MAX 0xFFFFFF
 
 typedef struct s_line
 {
