@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 12:39:04 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/13 18:09:56 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/13 18:49:03 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_put_pixel(t_mlx mlx_data, t_point point)
 		return ;
 	pixel = mlx_data.img.img_data + (point.y * mlx_data.img.size_line)
 		+ (point.x * (mlx_data.img.bpp / 8));
-	if (mlx_data.heat == 0)
+	if (mlx_data.heat == 1)
 		*(unsigned int *)pixel = (unsigned int)point.color_heat;
 	else
 		*(unsigned int *)pixel = (unsigned int)point.color;

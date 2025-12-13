@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/13 18:43:56 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/13 18:50:07 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static void	ft_init_struct_mlx(t_mlx *mlx_data)
 	mlx_data->addr_init = NULL;
 	mlx_data->addr_windows = NULL;
 	mlx_data->img.img_ptr = NULL;
+	mlx_data->heat = 0;
 }
 
 int	main(int argc, char **argv)
