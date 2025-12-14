@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 17:48:47 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/13 18:02:11 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/14 13:39:48 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,4 @@ void	ft_set_view_iso(t_mlx *mlx_data)
 	mlx_data->view.angle_x = ISO_ANGLE_X;
 	mlx_data->view.angle_y = 0;
 	mlx_data->view.angle_z = ISO_ANGLE_Y;
-}
-
-void	ft_set_view_para(t_mlx *mlx_data)
-{
-	mlx_data->view.zoom = ((double)mlx_data->windows_size_x
-			* 0.25) / mlx_data->map_size_x;
-	mlx_data->view.offset_x = mlx_data->windows_size_x / 2;
-	mlx_data->view.offset_y = mlx_data->windows_size_y / 2;
-	mlx_data->view.z_scale = 1;
-	mlx_data->view.angle_x = PARA_ANGLE_X;
-	mlx_data->view.angle_y = 0;
-	mlx_data->view.angle_z = PARA_ANGLE_Y;
 }

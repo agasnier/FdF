@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/13 18:50:07 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/14 14:18:36 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,17 @@ static int	ft_close_windows(t_mlx *mlx_data)
 
 static void	ft_render(t_mlx *mlx_data)
 {
-	ft_create_heat(mlx_data, mlx_data->tab_point);
+	if (BONUS)
+		ft_create_heat(mlx_data, mlx_data->tab_point);
 	ft_set_view_iso(mlx_data);
 	mlx_data->img.img_ptr = NULL;
 	ft_create_image(mlx_data);
 	mlx_hook(mlx_data->addr_windows, 17, 0, &ft_close_windows, mlx_data);
 	mlx_hook(mlx_data->addr_windows, KEY_PRESS, KEY_PRESS_MASK,
 		&ft_input_key, mlx_data);
-	mlx_hook(mlx_data->addr_windows, MOUSE, MOUSE_MASK,
-		&ft_input_mouse, mlx_data);
+	if (BONUS)
+		mlx_hook(mlx_data->addr_windows, MOUSE, MOUSE_MASK,
+			&ft_input_mouse, mlx_data);
 	mlx_loop(mlx_data->addr_init);
 }
 

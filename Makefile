@@ -12,24 +12,21 @@ LIBS = -L$(MLX_PATH) -lmlx -lXext -lX11 -lm
 SRCS =	fdf.c \
 		ft_control.c \
 		ft_draw.c \
-		ft_heat_map.c \
 		ft_helper.c \
 		ft_initialization.c \
 		ft_projection.c \
 		ft_put_line_helper.c \
 		get_next_line/get_next_line.c \
-		get_next_line/get_next_line_utils.c 
-	
-OBJS = $(SRCS:.c=.o)
+		get_next_line/get_next_line_utils.c
+
+SRCS_BONUS =	ft_control_bonus.c \
+				ft_heat_map_bonus.c 
 
 HEADER =	fdf.h \
 			get_next_line/get_next_line.h
 
-SRCS_BONUS = 
-
+OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
-
-HEADER_BONUS =	bonus/fdf_bonus.h
 
 all: $(MLX) $(NAME)
 
@@ -39,15 +36,14 @@ $(MLX):
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 
-bonus: $(MLX) $(NAME)
+bonus: CFLAGS += -D BONUS
+bonus: $(MLX) $(OBJS) $(OBJS_BONUS)
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_BONUS) $(LIBS) -o $(NAME)
 
 $(BONUS_NAME): $(OBJS) $(OBJS_BONUS)
 	$(CC) $(CFLAGS) $(OBJS) $(OBJS_BONUS) $(LIBS) -o $(BONUS_NAME)
 
 %.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-bonus/%.o: bonus/%.c $(HEADER_BONUS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
