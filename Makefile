@@ -23,7 +23,9 @@ SRCS_BONUS =	ft_control_bonus.c \
 				ft_heat_map_bonus.c 
 
 HEADER =	fdf.h \
-			get_next_line/get_next_line.h
+			get_next_line/get_next_line.h \
+			fdf_bonus.h \
+			struct.h
 
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)

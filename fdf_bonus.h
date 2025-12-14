@@ -6,12 +6,14 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 14:13:10 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/14 14:43:29 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/14 14:58:02 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_BONUS_H
 # define FDF_BONUS_H
+
+# include "struct.h"
 
 //bonus_angle
 # define PARA_ANGLE_X 0

@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/14 14:53:11 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/14 14:58:27 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <math.h>
+# include "struct.h"
+# include "fdf_bonus.h"
+
+//define_bonus
+# ifndef BONUS
+#  define BONUS 0
+# endif
 
 //manda_angle
 # define ISO_ANGLE_X 0.9550
@@ -29,71 +36,6 @@
 //keyboard_events
 # define KEY_PRESS	2
 # define KEY_PRESS_MASK 1
-
-typedef struct s_line
-{
-	int	dx;
-	int	dy;
-	int	err;
-	int	sx;
-	int	sy;
-}	t_line;
-
-typedef struct s_view
-{
-	double	zoom;
-	double	offset_x;
-	double	offset_y;
-	double	z_scale;
-	double	angle_x;
-	double	angle_y;
-	double	angle_z;
-}	t_view;
-
-typedef struct s_point_proj
-{
-	double	x;
-	double	y;
-	double	z;
-	int		color;
-	int		color_heat;
-}	t_point_proj;
-
-typedef struct s_point
-{
-	int				x;
-	int				y;
-	int				z;
-	t_point_proj	proj;
-	int				color;
-	int				color_heat;
-}	t_point;
-
-typedef struct s_img
-{
-	void	*img_ptr;
-	void	*img_data;
-	int		bpp;
-	int		size_line;
-	int		endian;
-}	t_img;
-
-typedef struct s_mlx
-{
-	void	*addr_init;
-	void	*addr_windows;
-	char	*windows_title;
-	int		windows_size_x;
-	int		windows_size_y;
-	int		map_size_x;
-	int		map_size_y;
-	int		z_min;
-	int		z_max;
-	int		heat;
-	t_img	img;
-	t_view	view;
-	t_point	**tab_point;
-}	t_mlx;
 
 //ft_projection.c
 void	ft_proj(t_point point, t_point_proj *point_proj,
@@ -129,16 +71,5 @@ void	ft_put_line_direc_y(t_point bress_a, t_point bress_b, int *dy, int *sy);
 void	ft_put_line_direc_x(t_point bress_a, t_point bress_b, int *dx, int *sx);
 void	ft_line_put_to_int(t_point *bress_a, t_point *bress_b,
 			t_point_proj point_a, t_point_proj point_b);
-
-//define_bonus
-
-
-# ifndef BONUS
-#  define BONUS 0
-# endif
-
-# include "fdf_bonus.h"
-
-
 
 #endif
