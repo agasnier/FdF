@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/14 14:18:36 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/14 16:06:20 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int	ft_close_windows(t_mlx *mlx_data)
 {
 	ft_free_all(mlx_data, 0);
 	exit(0);
-	return (0);
 }
 
 static void	ft_render(t_mlx *mlx_data)
