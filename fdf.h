@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:47:27 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/14 14:40:51 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/14 14:53:11 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,14 @@ void	ft_line_put_to_int(t_point *bress_a, t_point *bress_b,
 			t_point_proj point_a, t_point_proj point_b);
 
 //define_bonus
+
+
 # ifndef BONUS
 #  define BONUS 0
-#  include "fdf_bonus.h"
 # endif
+
+# include "fdf_bonus.h"
+
+
 
 #endif
