@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:09:40 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/13 18:42:34 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/14 16:10:20 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	ft_fill_tab(t_point *tab_point, int y, t_mlx mlx_data, char *line)
 	}
 }
 
-int	ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv)
+void	ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv)
 {
 	int		fd;
 	char	*line;
@@ -74,7 +74,7 @@ int	ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv)
 
 	fd = open(argv, O_RDONLY);
 	if (fd < 0)
-		return (1);
+		ft_free_all(&mlx_data, 1);
 	y = 0;
 	while (1)
 	{
@@ -86,7 +86,6 @@ int	ft_init_tab(t_point **tab_point, t_mlx mlx_data, char *argv)
 		y++;
 	}
 	close(fd);
-	return (0);
 }
 
 t_point	**ft_create_tab(t_mlx mlx_data)
