@@ -30,9 +30,11 @@ To clean all object files and executables: ```make fclean```
 
 ## How it work
 
-**Parsing and initialization:** The program first reads the ```.fdf``` file to store map coordinates (x, y, z) and colors if needed into a structure based on the map dimension. After filling of the structure the program init the mlx by creating a window at the screen size.
+**Parsing and initialization:** 
+* The program first reads the ```.fdf``` file to store map coordinates (x, y, z) and colors if needed into a structure based on the map dimension. After filling of the structure the program init the mlx by creating a window at the screen size.
 
-**(BONUS) Heatmap pre-calculation:** Before rendering, the program scans all the points for min and max Z_values. It assigns a gradient color to each point relative to its height in percentage. The start and the end color of the gradient can be set into the ```fdf_bonus.h``` file.
+**(BONUS) Heatmap pre-calculation:** 
+* Before rendering, the program scans all the points for min and max Z_values. It assigns a gradient color to each point relative to its height in percentage. The start and the end color of the gradient can be set into the ```fdf_bonus.h``` file.
 
 **Projection pipeline:** 
 * Centering & Scaling: Points are centered depending on the map_size and the altitude is adjusted by a z_scale factor.
