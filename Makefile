@@ -33,27 +33,35 @@ OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 all: $(MLX) $(NAME)
 
 $(MLX):
-	make -C $(MLX_PATH)
+	@echo "Compilation MLX..."
+	@make -C $(MLX_PATH) > /dev/null 2>&1
+	@echo "Compilation MLX OK."
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+	@echo "Compilation FDF..."
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+	@echo "Compilation FDF OK."
 
 bonus: CFLAGS += -D BONUS
 bonus: $(MLX) $(OBJS) $(OBJS_BONUS)
-	$(CC) $(CFLAGS) $(OBJS) $(OBJS_BONUS) $(LIBS) -o $(NAME)
+	@echo "Compilation FDF BONUS..."
+	@$(CC) $(CFLAGS) $(OBJS) $(OBJS_BONUS) $(LIBS) -o $(NAME)
+	@echo "Compilation FDF BONUS OK."
 
 $(BONUS_NAME): $(OBJS) $(OBJS_BONUS)
-	$(CC) $(CFLAGS) $(OBJS) $(OBJS_BONUS) $(LIBS) -o $(BONUS_NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(OBJS_BONUS) $(LIBS) -o $(BONUS_NAME)
 
 %.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJS) $(OBJS_BONUS)
-	make clean -C $(MLX_PATH)
+	@echo "Clean..."
+	@rm -rf $(OBJS) $(OBJS_BONUS)
+	@make clean -C $(MLX_PATH)  > /dev/null 2>&1
+	@echo "Clean OK."
 
 fclean: clean
-	rm -rf $(NAME) $(BONUS_NAME)
+	@rm -rf $(NAME) $(BONUS_NAME)
 
 re: fclean all
 
