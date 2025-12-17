@@ -30,14 +30,14 @@ HEADER =	fdf.h \
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS:.c=_bonus.o) $(SRCS_BONUS:.c=_bonus.o)
 
-all: $(MLX) $(NAME)
+all: $(NAME)
 
 $(MLX):
 	@echo "Compilation MLX..."
 	@make -C $(MLX_PATH) > /dev/null 2>&1
 	@echo "Compilation MLX OK."
 
-$(NAME): .manda $(OBJS) 
+$(NAME): .manda $(MLX) $(OBJS) 
 	@echo "Compilation FDF..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 	@echo "Compilation FDF OK."
@@ -69,9 +69,7 @@ bonus: .bonus $(MLX) $(OBJS_BONUS)
 
 clean:
 	@rm -rf $(OBJS) $(OBJS_BONUS)
-	@if [ ! -f .bonus ] && [ ! -f .manda ]; then \
-		make clean -C $(MLX_PATH)  > /dev/null 2>&1; \
-	fi
+	@make clean -C $(MLX_PATH) > /dev/null 2>&1;
 	@rm -f .bonus .manda
 
 fclean: clean

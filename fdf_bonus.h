@@ -41,8 +41,8 @@
 # define KEY_D      0x0064
 
 //heatmap
-# define HEATMAP_MIN 0x111111
-# define HEATMAP_MAX 0xFFFFFF
+# define HEATMAP_MIN 0xFF0000
+# define HEATMAP_MAX 0x0000FF
 
 //ft_control_bonus.c
 void	ft_rotation(int keycode, t_mlx *mlx_data);
