@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:10:29 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/13 17:48:27 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/17 09:24:56 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,10 @@ int	ft_size_map(char *argv, t_mlx *mlx_data)
 
 	fd = open(argv, O_RDONLY);
 	if (fd < 0)
+	{
+		write(2, "error\n", 6);
 		return (1);
+	}
 	ft_size_map_gnl(fd, mlx_data);
 	close(fd);
 	return (0);

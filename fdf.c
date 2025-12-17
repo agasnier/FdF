@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:36:55 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/14 16:06:20 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/17 09:24:40 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char **argv)
 		return (0);
 	ft_init_struct_mlx(&mlx_data);
 	if (ft_size_map(argv[1], &mlx_data))
-		ft_free_all(&mlx_data, 1);
+		return (1);
 	mlx_data.tab_point = ft_create_tab(mlx_data);
 	if (mlx_data.tab_point == NULL)
 		return (1);
