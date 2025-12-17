@@ -28,7 +28,7 @@ HEADER =	fdf.h \
 			struct.h
 
 OBJS = $(SRCS:.c=.o)
-OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+OBJS_BONUS = $(SRCS:.c=_bonus.o) $(SRCS_BONUS:.c=_bonus.o)
 
 all: $(MLX) $(NAME)
 
@@ -37,30 +37,45 @@ $(MLX):
 	@make -C $(MLX_PATH) > /dev/null 2>&1
 	@echo "Compilation MLX OK."
 
-$(NAME): $(OBJS)
+$(NAME): .manda $(OBJS) 
 	@echo "Compilation FDF..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 	@echo "Compilation FDF OK."
 
-bonus: CFLAGS += -D BONUS
-bonus: $(MLX) $(OBJS) $(OBJS_BONUS)
+.manda:
+	@if [ -f .bonus ]; then \
+		echo "Switch to manda..."; \
+		$(MAKE) fclean > /dev/null 2>&1; \
+	fi
+	@touch .manda
+
+bonus: .bonus $(MLX) $(OBJS_BONUS)
 	@echo "Compilation FDF BONUS..."
-	@$(CC) $(CFLAGS) $(OBJS) $(OBJS_BONUS) $(LIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBS) -o $(NAME)
 	@echo "Compilation FDF BONUS OK."
 
-$(BONUS_NAME): $(OBJS) $(OBJS_BONUS)
-	@$(CC) $(CFLAGS) $(OBJS) $(OBJS_BONUS) $(LIBS) -o $(BONUS_NAME)
+.bonus: 
+	@if [ -f .manda ]; then \
+		echo "Switch to bonus..."; \
+		$(MAKE) fclean > /dev/null 2>&1; \
+	fi
+	@touch .bonus
 
 %.o: %.c $(HEADER)
 	@$(CC) $(CFLAGS) -c $< -o $@
+	
+%_bonus.o: %.c $(HEADER)
+	@$(CC) $(CFLAGS) -D BONUS -c $< -o $@
 
 clean:
 	@rm -rf $(OBJS) $(OBJS_BONUS)
-	@make clean -C $(MLX_PATH)  > /dev/null 2>&1
+	@if [ ! -f .bonus ] && [ ! -f .manda ]; then \
+		make clean -C $(MLX_PATH)  > /dev/null 2>&1; \
+	fi
+	@rm -f .bonus .manda
 
 fclean: clean
-	@rm -rf $(NAME) $(BONUS_NAME)
-
+	@rm -rf $(NAME)
 re: fclean all
 
 .PHONY: all clean fclean re bonus
