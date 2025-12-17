@@ -6,7 +6,7 @@
 /*   By: algasnie <algasnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:10:29 by algasnie          #+#    #+#             */
-/*   Updated: 2025/12/17 09:24:56 by algasnie         ###   ########.fr       */
+/*   Updated: 2025/12/17 09:58:10 by algasnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ int	ft_take_color(char *line, int *i)
 
 	y = 0;
 	(*i) += 3;
-	while (line[*i] != ' ' && line[*i] != '\n' && line[*i] != '\0')
+	while (y < 6 && line[*i] && line[*i] != ' ' && line[*i] != '\n')
 	{
 		color[y] = line[*i];
 		(*i)++;
 		y++;
 	}
 	color[y] = '\0';
+	while (line[*i] && line[*i] != ' ' && line[*i] != '\n')
+		(*i)++;
 	return (ft_convert_color(color));
 }
 
